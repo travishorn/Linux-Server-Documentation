@@ -105,9 +105,31 @@ Note that you can change the **Host Port** to another number if you are serving
 multiple apps on port 443 on other virtual machines or port 443 is otherwise
 already in use on the host machine.
 
-With the port forwarded correctly, you should be able to visit https://localhost
-and see your web app. You can also visit http://localhost and you should be
-automatically redirected to https://localhost.
+### Firewall Configuration
+
+If you have a firewall running, you'll need to allow HTTPS connections.
+
+Edit `/etc/nftables.conf`.
+
+```
+table inet filter {
+    chain input {
+        # Allow HTTPS connections
+        tcp dport 443 accept;
+    }
+}
+```
+
+Restart the nftables service.
+
+```sh
+sudo systemctl restart nftables
+```
+
+With the port forwarded correctly, and the firewall allowing connections, you
+should be able to visit https://localhost and see your web app. You can also
+visit http://localhost and you should be automatically redirected to
+https://localhost.
 
 Note that if you're using a self-signed certificate, your browser will probably
 warn you that the certificate is invalid. You can usually bypass this by

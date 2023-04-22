@@ -59,9 +59,10 @@ EXIT;
 
 Edit `/etc/mysql/my.cnf`.
 
-Somewhere in the `[client-server]` section, add the following line.
+Add the following lines at the end of the file.
 
 ```
+[mysqld]
 bind-address = 0.0.0.0
 ```
 
@@ -71,6 +72,28 @@ Restart the database service.
 
 ```sh
 sudo systemctl restart mariadb
+```
+
+### Firewall Configuration
+
+If you have a firewall running, you'll need to allow connections on MariaDB's
+default port 3306.
+
+Edit `/etc/nftables.conf`.
+
+```
+table inet filter {
+    chain input {
+        # Allow MariaDB
+        tcp dport 3306 accept;
+    }
+}
+```
+
+Restart the nftables service.
+
+```sh
+sudo systemctl restart nftables
 ```
 
 ### Forward the Port on VirtualBox

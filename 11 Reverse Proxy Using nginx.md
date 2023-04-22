@@ -85,9 +85,7 @@ http://localhost if using a virtual machine). You should see your Node.js app.
 
 All requests to the web application should go through port 80 (or 443 if you set
 up HTTPS/SSL later). However, the application is still listening on port 3000.
-Use a firewall to block external requests to port 3000.
-
-TODO: firewall instructions
+Use a firewall to block external requests to port 3000. See separate guide.
 
 ### Take Another Snapshot
 
