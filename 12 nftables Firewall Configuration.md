@@ -18,6 +18,12 @@ table inet filter {
                 # Allow connections on local machine
                 iifname lo accept;
 
+                # Allow established/related connections
+                ct state established,related accept;
+
+                # Be pingable
+                icmp type echo-request accept;
+
                 # Allow SSH and HTTP from anywhere
                 tcp dport {ssh,http} accept;
 
