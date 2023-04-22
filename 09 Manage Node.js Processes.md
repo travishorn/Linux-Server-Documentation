@@ -19,11 +19,12 @@ Create the file `~/apps/ecosystem.config.js`.
 
 ```javascript
 module.exports = {
-  apps : [{
-    name   : "myapp",
-    cwd    : "./myrepo",
-    script : "npm install && npm run build && npm start",
-    watch  : true,
+  apps: [{
+    name: "myapp",
+    cwd: "./myapp",
+    script: "npm install && npm run build && npm start",
+    watch: true,
+    ignore_watch: ["node_modules", "package-lock.json", ".next"],
   }],
 };
 ```
@@ -57,17 +58,18 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -
 Copy the command. Paste it into your terminal and run it.
 
 pm2 will now automatically start the saved Node.js processes at system startup.
+Try restarting the machine to test it.
+
 You will probably want the server serving the web app(s) on port 80 and/or port
 443 for HTTP/HTTPS. For that, you will have to set up a reverse proxy.
 
-Try restarting the machine to test it.
 
 ### Take Another Snapshot
 
 If you are setting up the server on a virtual machine, follow these steps to
 take another snapshot.
 
-Shut down the machine
+Shut down the machine.
 
 ```sh
 shutdown now
