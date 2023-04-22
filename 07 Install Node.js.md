@@ -55,6 +55,10 @@ The exact version number might vary.
 To stay organized, I recommend creating a directory to store any apps you might
 deploy.
 
+```sh
+mkdir ~/apps
+```
+
 ### Take Another Snapshot
 
 If you are setting up the server on a virtual machine, follow these steps to
