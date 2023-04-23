@@ -115,7 +115,7 @@ Edit `/etc/nftables.conf`.
 table inet filter {
     chain input {
         # Allow HTTPS connections
-        tcp dport 443 accept;
+        tcp dport 443 accept
     }
 }
 ```

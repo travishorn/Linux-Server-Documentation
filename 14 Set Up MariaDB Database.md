@@ -85,7 +85,7 @@ Edit `/etc/nftables.conf`.
 table inet filter {
     chain input {
         # Allow MariaDB
-        tcp dport 3306 accept;
+        tcp dport 3306 accept
     }
 }
 ```
