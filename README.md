@@ -14,8 +14,8 @@ able to jump to any section and follow the instructions from there.
 If you follow this guide from start to finish, you will have a working Debian
 Linux server that...
 
-- you can connect to remotely,
-- can host bare source code repositories,
+- you can connect to remotely
+- can host bare source code repositories
 - runs production web applications with continuous integration
 - serves content through a reverse-proxy over HTTP and HTTPS
 - is secured with a firewall
