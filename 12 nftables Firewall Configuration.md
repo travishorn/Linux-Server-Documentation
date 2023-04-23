@@ -15,26 +15,32 @@ table inet filter {
         chain input {
                 type filter hook input priority 0;
 
-                # Allow connections on local machine
-                iifname lo accept;
+                # Allow loopback (local connections)
+                iifname lo accept
 
-                # Allow established/related connections
-                ct state established,related accept;
+                # Allow established/related
+                ct state established,related accept
 
-                # Be pingable
-                icmp type echo-request accept;
+                # Allow incoming pings
+                ip protocol icmp limit rate 1/second accept
 
-                # Allow SSH and HTTP from anywhere
-                tcp dport {ssh,http} accept;
+                # Allow SSH and HTTP
+                tcp dport {ssh,http} accept
 
-                # Block everything else
-                policy drop;
+                # Drop everything else
+                drop
         }
         chain forward {
                 type filter hook forward priority 0;
+
+                # Disallow forwarding
+                drop
         }
         chain output {
                 type filter hook output priority 0;
+
+                # Allow all outgoing traffic
+                accept
         }
 }
 ```
