@@ -48,6 +48,16 @@ functionality or harden for additional security depending on your needs.
     App](./15%20Connect%20to%20DB%20from%20Next.js.md)
 16. [Monitoring with Prometheus](./16%20Monitoring%20with%20Prometheus.md)
 
+## To Do
+
+- SSH authentication with public/private keys
+  - Generating keys
+  - Adding authorized keys to system user accounts
+  - Setting up client configuration with identity files
+- git remotes via SSH keys
+  - Authorizing multiple devs with individual keys
+  - Eliminate need to share passwords
+
 ## License
 
 Copyright 2023 Travis Horn, licensed under [CC BY
