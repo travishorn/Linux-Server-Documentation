@@ -1,6 +1,6 @@
 # Linux Server
 
-## Create New git Repository
+## Create a New git Repository
 
 ### Prerequisites
 

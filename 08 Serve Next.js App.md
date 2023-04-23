@@ -1,6 +1,6 @@
 # Linux Server
 
-## Serving a Next.js App
+## Serve a Next.js App
 
 ### Prerequisites
 

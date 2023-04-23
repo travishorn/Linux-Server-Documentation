@@ -1,6 +1,6 @@
 # Linux Server
 
-## Set Up MariaDB Database
+## Set Up a MariaDB Database
 
 ### Install MariaDB
 
