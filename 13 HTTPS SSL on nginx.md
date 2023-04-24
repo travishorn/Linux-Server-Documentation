@@ -5,22 +5,161 @@
 ### Prerequisites
 
 - nginx configured as a reverse proxy for a web application
+- a domain name (or scroll down to the "Self-Signed" section below)
 
-### Set up HTTPS/SSL
+### Prepare your nginx Configuration
 
-Make a directory to store the certificate files
+Edit `/etc/nginx/sites-available/default`
+
+Find the line that starts with `server_name` and replace the `_` character with
+the domain name the server will use. You can configure multiple domains by
+separating them with a space.
+
+```
+server_name example.com www.example.com
+```
+
+Save and close the file.
+
+Verify the nginx configuration.
+
+```sh
+sudo nginx -t
+```
+
+If all is well, reload nginx.
+
+```sh
+sudo systemctl reload nginx
+```
+
+### Firewall Configuration
+
+If you have a firewall running, you'll need to allow HTTPS connections.
+
+Edit `/etc/nftables.conf`.
+
+```
+table inet filter {
+    chain input {
+        # Allow HTTPS connections
+        tcp dport 443 accept
+    }
+}
+```
+
+Restart the nftables service.
+
+```sh
+sudo systemctl restart nftables
+```
+
+### Use Certbot to enable HTTPS
+
+Update your system first.
+
+```sh
+sudo apt update
+sudo apt upgrade
+```
+
+Install `certbot` and `python3-certbot-nginx`.
+
+```sh
+sudo apt install -y certbot python3-certbot-nginx
+```
+
+Generate the SSL certificate.
+
+```sh
+sudo certbot --nginx -d example.com -d www.example.com
+```
+
+You will be asked some questions, including your email address. Answer the
+questions to continue.
+
+Certbot automatically generates the certificate and configures nginx for you. It
+also sets a timer that runs periodically that will automatically renew your
+certificate before it expires.
+
+#### Forward the Port on VirtualBox
+
+If you are using VirtualBox, you will need to forward port 443.
+
+Open **Oracle VM VirtualBox Manager**.
+
+Click to highlight the server virtual machine.
+
+Click on **Settings**.
+
+Click **Network** in the pane on the left.
+
+Under the **Adapter 1** tab, click **Advanced**.
+
+Click **Port Forwarding**.
+
+Click the **Adds new port forwarding rule.** button on the right. It looks like
+a green diamond with a green "plus" sign on top of it.
+
+Under name, enter **HTTPS**.
+
+Under **Host Port**, enter **443**.
+
+Under **Guest Port**, enter **443**.
+
+Note that you can change the **Host Port** to another number if you are serving
+multiple apps on port 443 on other virtual machines or port 443 is otherwise
+already in use on the host machine.
+
+With the port forwarded correctly, and the firewall allowing connections, you
+should be able to visit your domain using `https://` and see your web app. You
+can also visit it via `http://` and you should be automatically redirected to
+the `https://` URL.
+
+Note that if you're using a self-signed certificate, your browser will probably
+warn you that the certificate is invalid. You can usually bypass this by
+clicking **Advanced** and **Proceed** or something similar.
+
+### Take Another Snapshot
+
+If you are setting up the server on a virtual machine, follow these steps to
+take another snapshot.
+
+Shut down the machine
+
+```sh
+shutdown now
+```
+
+In VirtualBox, make sure the machine is selected and then click **Machine** >
+**Tools** > **Snapshots** from the menu at the top.
+
+Click the **Take** button.
+
+Under **Snapshot Name**, enter "HTTPS/SSL Set Up" and click **Ok**.
+
+Click the **Start** button again. The virtual machine will boot back up.
+
+### Self-Signed Certificate
+
+If you aren't ready to use a domain name with the server, you can use a
+self-signed certificate. Visitors to the site will receive a warning about the
+invalid certificate, but they can bypass it, making this a good option for
+testing and development.
+
+Make a directory to store the certificate files.
 
 ```sh
 sudo mkdir /etc/nginx/ssl
 ```
 
-Change into that directory
+Change into that directory.
 
 ```sh
 cd /etc/nginx/ssl
 ```
 
-#### Generate a Self-Signed Certificate
+#### Generate a Certificate
 
 If you have an actual certificate you want to use, you can skip this step.
 
@@ -76,81 +215,10 @@ If it is, restart the nginx service.
 sudo systemctl restart nginx
 ```
 
-#### Forward the Port on VirtualBox
-
-If you are using VirtualBox, you will need to forward port 443.
-
-Open **Oracle VM VirtualBox Manager**.
-
-Click to highlight the server virtual machine.
-
-Click on **Settings**.
-
-Click **Network** in the pane on the left.
-
-Under the **Adapter 1** tab, click **Advanced**.
-
-Click **Port Forwarding**.
-
-Click the **Adds new port forwarding rule.** button on the right. It looks like
-a green diamond with a green "plus" sign on top of it.
-
-Under name, enter **HTTPS**.
-
-Under **Host Port**, enter **443**.
-
-Under **Guest Port**, enter **443**.
-
-Note that you can change the **Host Port** to another number if you are serving
-multiple apps on port 443 on other virtual machines or port 443 is otherwise
-already in use on the host machine.
-
-### Firewall Configuration
-
-If you have a firewall running, you'll need to allow HTTPS connections.
-
-Edit `/etc/nftables.conf`.
-
-```
-table inet filter {
-    chain input {
-        # Allow HTTPS connections
-        tcp dport 443 accept
-    }
-}
-```
-
-Restart the nftables service.
-
-```sh
-sudo systemctl restart nftables
-```
-
-With the port forwarded correctly, and the firewall allowing connections, you
-should be able to visit https://localhost and see your web app. You can also
-visit http://localhost and you should be automatically redirected to
+You should now be able to visit https://localhost and see your web app. You can
+also visit http://localhost and you should be automatically redirected to
 https://localhost.
 
-Note that if you're using a self-signed certificate, your browser will probably
-warn you that the certificate is invalid. You can usually bypass this by
-clicking **Advanced** and **Proceed** or something similar.
-
-### Take Another Snapshot
-
-If you are setting up the server on a virtual machine, follow these steps to
-take another snapshot.
-
-Shut down the machine
-
-```sh
-shutdown now
-```
-
-In VirtualBox, make sure the machine is selected and then click **Machine** >
-**Tools** > **Snapshots** from the menu at the top.
-
-Click the **Take** button.
-
-Under **Snapshot Name**, enter "HTTPS/SSL Set Up" and click **Ok**.
-
-Click the **Start** button again. The virtual machine will boot back up.
+Note that since you're using a self-signed certificate, your browser will
+probably warn you that the certificate is invalid. You can usually bypass this
+by clicking **Advanced** and **Proceed** or something similar.
