@@ -79,7 +79,7 @@ export default async function handler(
     case "GET":
       try {
         const result = await executeQuery({
-          query: "SELECT text FROM Messages ORDER BY created_at LIMIT 1",
+          query: "SELECT text FROM Messages ORDER BY createdAt LIMIT 1",
           values: [],
         });
   
