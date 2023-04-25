@@ -32,7 +32,7 @@ module.exports = {
 Start the web app process.
 
 ```sh
-pm2 start ecosystem.config.js
+pm2 start ~/apps/ecosystem.config.js
 ```
 
 Check that the web app is running at http://[server IP address/hostname]:3000.
@@ -62,7 +62,6 @@ Try restarting the machine to test it.
 
 You will probably want the server serving the web app(s) on port 80 and/or port
 443 for HTTP/HTTPS. For that, you will have to set up a reverse proxy.
-
 
 ### Take Another Snapshot
 
