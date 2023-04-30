@@ -1,6 +1,6 @@
 # Linux Server
 
-## Recovering from Database Backups
+## Database Backup Recovery
 
 ### Prerequisites
 
