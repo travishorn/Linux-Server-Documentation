@@ -28,7 +28,7 @@ sudo apt install mariadb-backup
 
 Create a backup script at `/usr/local/bin/backup_databases.sh`.
 
-```
+```sh
 #!/bin/bash
 
 # Enable errexit so the script stops as soon as it encounters an error
@@ -37,11 +37,35 @@ set -e
 # Create directory for backups
 mkdir -p /var/mariadb/backup
 
-# Use mariadb-backup to create a compressed backup of the database
-mariadb-backup --user=root --backup --stream=xbstream | gzip > /var/mariadb/backup/backup_$(date -u +%Y-%m-%dT%H:%M:%SZ).gz
+# Store the backup filename
+FILENAME=/var/mariadb/backup/backup_$(date -u +%Y-%m-%dT%H:%M:%SZ).gz
 
-# Remove files 14 days old or older
-find /var/mariadb/backup -type f -mtime +14 -exec rm {} \;
+# Use mariadb-backup to create a compressed backup of the database
+mariadb-backup --user=root --backup --stream=xbstream | gzip > "$FILENAME"
+
+# Was the backup file created?
+if [ -f "$FILENAME" ]; then
+        # Is the file too small to contain data?
+        if [ $(stat -c "%s" "$FILENAME") -lt 100000 ]; then
+                # Remove the junk file. Output error. Exit.
+                rm "$FILENAME"
+                echo "Backup failed: The backup file contained no data" >&2
+                exit 1
+        fi
+else
+        # Output error. Exit.
+        echo "Backup failed: No backup file was created" >&2
+        exit 1
+fi
+
+# Count the number of backup files
+NUM_BACKUPS=$(find /var/mariadb/backup -type f -name "backup_*\.gz" | wc -l)
+
+# If there are multiple backup files...
+if [ $NUM_BACKUPS -gt 1 ]; then
+        # Remove backup files that are 14 days old or older
+        find /var/mariadb/backup -type f -name "backup_*\.gz" -mtime +14 -exec rm {} \;
+fi
 ```
 
 Make the script executable.
@@ -56,9 +80,11 @@ Create `/etc/systemd/system/backup_databases.service`.
 ```
 [Unit]
 Description=Backup Databases
+After=mariadb.service
+Requires=mariadb.service
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/usr/local/bin/backup_databases.sh
 
 [Install]
@@ -86,7 +112,13 @@ Reload the system daemon to pick up the new service and timer.
 sudo systemctl daemon-reload
 ```
 
-Start the timer.
+Enable the timer so it starts when the system starts.
+
+```sh
+sudo systemctl enable backup_databases.timer
+```
+
+Start the timer now.
 
 ```sh
 sudo systemctl start backup_databases.timer
