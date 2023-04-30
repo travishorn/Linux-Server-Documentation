@@ -5,7 +5,7 @@
 ### Prerequisites
 
 - The database is MariaDB
-- `mariadb-backup` is installed
+- `mariabackup` is installed
 - You have a compressed backup file containing the state of the database to
   which you want to recover
 
@@ -35,7 +35,7 @@ time are not point-in-time consistent and MariaDB will reject the recovery if
 not properly prepared.
 
 ```sh
-sudo mariadb-backup --prepare --target-dir=/var/mariadb/backup/recovered
+sudo mariabackup --prepare --target-dir=/var/mariadb/backup/recovered
 ```
 
 Stop MariaDB.
@@ -53,7 +53,7 @@ sudo rm -rf /var/lib/mysql
 Restore the backup files.
 
 ```sh
-sudo mariadb-backup --copy-back --target-dir=/var/mariadb/backup/recovered
+sudo mariabackup --copy-back --target-dir=/var/mariadb/backup/recovered
 ```
 
 Change ownership of the newly recovered files so that the `mysql` user can

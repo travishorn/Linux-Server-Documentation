@@ -18,10 +18,10 @@ sudo apt update
 sudo apt upgrade
 ```
 
-Install mariadb-backup
+Install mariabackup
 
 ```sh
-sudo apt install mariadb-backup
+sudo apt install mariabackup
 ```
 
 ### Create a Backup Script
@@ -40,8 +40,8 @@ mkdir -p /var/mariadb/backup
 # Store the backup filename
 FILENAME=/var/mariadb/backup/backup_$(date -u +%Y-%m-%dT%H:%M:%SZ).gz
 
-# Use mariadb-backup to create a compressed backup of the database
-mariadb-backup --user=root --backup --stream=xbstream | gzip > "$FILENAME"
+# Use mariabackup to create a compressed backup of the database
+mariabackup --user=root --backup --stream=xbstream | gzip > "$FILENAME"
 
 # Was the backup file created?
 if [ -f "$FILENAME" ]; then
@@ -132,7 +132,7 @@ every day at midnight.
 You can back up databases at any time.
 
 ```sh
-sudo mariadb-backup --user=root --backup --stream=xbstream | sudo gzip > /var/mariadb/backup/backup_$(date -u +%Y-%m-%dT%H:%M:%SZ).gz
+sudo mariabackup --user=root --backup --stream=xbstream | sudo gzip > /var/mariadb/backup/backup_$(date -u +%Y-%m-%dT%H:%M:%SZ).gz
 ```
 
 Or you could run the backup script.

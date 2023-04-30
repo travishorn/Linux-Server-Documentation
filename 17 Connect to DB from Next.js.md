@@ -5,7 +5,7 @@
 ### Prequisites
 
 - A running Next.js app
-- A running MariaDB instance with user access configured
+- A running MariaDB (or MySQL) instance with user access configured
 
 ### Install Dependencies
 
@@ -23,11 +23,11 @@ development machine, you may create a file called `.env.local` in the root
 directory of your app.
 
 ```
-MYSQL_HOST= 127.0.0.1
-MYSQL_PORT= 3306
-MYSQL_DATABASE= [database name]
-MYSQL_USER= [database user name]
-MYSQL_PASSWORD= [database user password]
+DB_HOST= 127.0.0.1
+DB_PORT= 3306
+DB_DATABASE= [database name]
+DB_USER= [database user name]
+DB_PASSWORD= [database user password]
 ```
 
 You may need to change the host or the port depending on your setup.
@@ -37,15 +37,15 @@ You may need to change the host or the port depending on your setup.
 Create a new file called `lib/db.js` in the root directory of your app.
 
 ```javascript
-import mysql from 'serverless-mysql';
+import dbConnection from 'serverless-mysql';
 
-const db = mysql({
+const db = dbConnection({
   config: {
-    host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT,
-    database: process.env.MYSQL_DATABASE,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
   },
 });
 

@@ -13,7 +13,7 @@ sudo apt install -y mariadb-server
 Log in as the root system user.
 
 ```sh
-sudo mysql
+sudo mariadb
 ```
 
 Create a database for your web application.
