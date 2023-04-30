@@ -44,9 +44,11 @@ functionality or harden for additional security depending on your needs.
     Configuration](./12%20nftables%20Firewall%20Configuration.md)
 13. [HTTPS/SSL on nginx](./13%20HTTPS%20SSL%20on%20nginx.md)
 14. [Set Up a MariaDB Database](./14%20Set%20Up%20MariaDB%20Database.md)
-15. [Connect to MariaDB from a Next.js
+15. [Automatic Database Backups](./15%20Automatic%20Database%20Backups.md)
+16. [Database Backup Recovery](./16%20Database%20Backup%20Recovery.md)
+17. [Connect to MariaDB from a Next.js
     App](./15%20Connect%20to%20DB%20from%20Next.js.md)
-16. [Monitoring with Prometheus](./16%20Monitoring%20with%20Prometheus.md)
+18. [Monitoring with Prometheus](./16%20Monitoring%20with%20Prometheus.md)
 
 ## To Do
 
