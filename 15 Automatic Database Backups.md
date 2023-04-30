@@ -11,16 +11,8 @@
 
 ### Install the Backup Utility
 
-Make sure your system is up to date.
-
 ```sh
 sudo apt update
-sudo apt upgrade
-```
-
-Install mariabackup
-
-```sh
 sudo apt install mariabackup
 ```
 

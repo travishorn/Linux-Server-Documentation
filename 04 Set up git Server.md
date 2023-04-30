@@ -13,7 +13,6 @@ If it isn't already installed, install git.
 
 ```sh
 sudo apt update
-sudo apt upgrade
 sudo apt install -y git
 ```
 

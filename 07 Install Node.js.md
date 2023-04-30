@@ -2,16 +2,10 @@
 
 ## Install Node.js
 
-Update and upgrade existing packages
-
-```sh
-sudo apt update
-sudo apt upgrade
-```
-
 In order to install Node.js, first install curl.
 
 ```sh
+sudo apt update
 sudo apt install -y curl
 ```
 

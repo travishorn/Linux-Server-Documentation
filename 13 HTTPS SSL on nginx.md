@@ -56,16 +56,10 @@ sudo systemctl restart nftables
 
 ### Use Certbot to enable HTTPS
 
-Update your system first.
-
-```sh
-sudo apt update
-sudo apt upgrade
-```
-
 Install `certbot` and `python3-certbot-nginx`.
 
 ```sh
+sudo apt update
 sudo apt install -y certbot python3-certbot-nginx
 ```
 

@@ -5,6 +5,7 @@
 ### Install MariaDB
 
 ```sh
+sudo apt update
 sudo apt install -y mariadb-server
 ```
 
