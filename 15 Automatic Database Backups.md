@@ -1,6 +1,6 @@
 # Linux Server
 
-## Set Up Database Backups
+## Automatic Database Backups
 
 ### Prerequisites
 
