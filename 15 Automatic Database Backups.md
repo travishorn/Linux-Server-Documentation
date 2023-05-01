@@ -13,7 +13,7 @@
 
 ```sh
 sudo apt update
-sudo apt install mariabackup
+sudo apt install -y mariadb-backup
 ```
 
 ### Create a Backup Script
