@@ -1,6 +1,6 @@
 # Linux Server
 
-## Port Forwarding on VirtualBox
+## Port Forwarding in VirtualBox
 
 This guide is only necessary if your server is running on a virtual machine. Any
 time you need to connect to your virtual machine remotely, you'll need to make
@@ -45,7 +45,8 @@ Click **OK** again.
 
 ### Other Ports
 
-For this series of guides, we will be setting up services that listen on the following ports. You should set up port forwarding for each of them:
+For this series of guides, we will be setting up services that listen on the
+following ports. You should set up port forwarding for each of them:
 
 - HTTP, port 80
 - HTTPS, port 443

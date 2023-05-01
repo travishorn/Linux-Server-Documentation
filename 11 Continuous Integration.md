@@ -4,7 +4,7 @@
 
 ### Prerequisites
 
-- A Node.js app (Next.js or otherwise) is being managed by pm2
+- A Node.js app (Next.js or otherwise) is being managed by PM2
 
 ### Set up CI
 
@@ -26,5 +26,5 @@ chmod +x ~/repos/[repo name]/hooks/post-receive
 
 Every time changes are pushed to the repository, the post-receive hook will
 execute, pulling in the new changes to the running application. Once the changes
-are pulled in, pm2 will detect the file changes, rebuild the app, and restart
+are pulled in, PM2 will detect the file changes, rebuild the app, and restart
 the server.

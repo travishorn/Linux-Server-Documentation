@@ -2,6 +2,13 @@
 
 ## Monitoring with Prometheus
 
+### Prerequisites
+
+- A firewall rule to accept traffic on TCP port 9090 has been added
+- If using a virtual machine, port 9090 is forwarded
+
+### Installation
+
 Go to https://prometheus.io/download/.
 
 Under **Operating System**, choose **linux**.
@@ -89,28 +96,6 @@ Enable the Prometheus service so it starts when the system starts.
 
 ```sh
 sudo systemctl enable prometheus
-```
-
-### Firewall Configuration
-
-If you have a firewall running, you'll need to allow connections on Prometheus's
-default port 9090.
-
-Edit `/etc/nftables.conf`.
-
-```
-table inet filter {
-    chain input {
-        # Allow Prometheus
-        tcp dport 9090 accept
-    }
-}
-```
-
-Restart the nftables service.
-
-```sh
-sudo systemctl restart nftables
 ```
 
 Verify it works by going to http://[your server's IP address/hostname]:9090.

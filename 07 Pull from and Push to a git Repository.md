@@ -1,6 +1,6 @@
 # Linux Server
 
-## Pull and Push to a git Repository
+## Pull from and Push to a git Repository
 
 ### Prerequisites
 

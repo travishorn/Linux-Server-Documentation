@@ -1,6 +1,6 @@
 # Linux Server
 
-## Manage Node.js Processes with pm2
+## Manage Node.js Processes with PM2
 
 ### Prerequisites
 
@@ -8,9 +8,9 @@
 - The Node.js app is not currently running
 - If using a virtual machine, port 3000 is forwarded
 
-### Set Up pm2
+### Setup
 
-Install pm2 globally using npm.
+Install PM2 globally using npm.
 
 ```sh
 sudo npm install -g pm2
@@ -58,7 +58,7 @@ sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -
 
 Copy the command. Paste it into your terminal and run it.
 
-pm2 will now automatically start the saved Node.js processes at system startup.
+PM2 will now automatically start the saved Node.js processes at system startup.
 Try restarting the machine to test it.
 
 You will probably want the server serving the web app(s) on port 80 and/or port
@@ -80,6 +80,6 @@ In VirtualBox, make sure the machine is selected and then click **Machine** >
 
 Click the **Take** button.
 
-Under **Snapshot Name**, enter "pm2 Installed" and click **Ok**.
+Under **Snapshot Name**, type "PM2 Installed" and click **Ok**.
 
 Click the **Start** button again. The virtual machine will boot back up.

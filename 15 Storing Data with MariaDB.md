@@ -1,9 +1,10 @@
 # Linux Server
 
-## Set Up a MariaDB Database
+## Storing Data with MariaDB
 
 ### Prerequisites
 
+- A firewall rule to accept traffic on TCP port 3306 has been added
 - If using a virtual machine, port 3306 is forwarded
 
 ### Install MariaDB
@@ -77,28 +78,6 @@ Restart the database service.
 
 ```sh
 sudo systemctl restart mariadb
-```
-
-### Firewall Configuration
-
-If you have a firewall running, you'll need to allow connections on MariaDB's
-default port 3306.
-
-Edit `/etc/nftables.conf`.
-
-```
-table inet filter {
-    chain input {
-        # Allow MariaDB
-        tcp dport 3306 accept
-    }
-}
-```
-
-Restart the nftables service.
-
-```sh
-sudo systemctl restart nftables
 ```
 
 ### Take Another Snapshot

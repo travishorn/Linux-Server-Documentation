@@ -1,6 +1,6 @@
 # Linux Server
 
-## Install the Operating System
+## Install the Debian Linux Operating System
 
 ### Prerequisites
 

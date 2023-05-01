@@ -1,6 +1,6 @@
 # Linux Server
 
-## Connect via SSH
+## Access a Remote Shell with SSH
 
 ### Prerequisites
 

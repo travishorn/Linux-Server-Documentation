@@ -6,6 +6,7 @@
 
 - nginx configured as a reverse proxy for a web application
 - a domain name (or scroll down to the "Self-Signed" section below)
+- A firewall rule to accept traffic on TCP port 443 has been added
 - If using a virtual machine, port 443 is forwarded
 
 ### Prepare your nginx Configuration
@@ -32,27 +33,6 @@ If all is well, reload nginx.
 
 ```sh
 sudo systemctl reload nginx
-```
-
-### Firewall Configuration
-
-If you have a firewall running, you'll need to allow HTTPS connections.
-
-Edit `/etc/nftables.conf`.
-
-```
-table inet filter {
-    chain input {
-        # Allow HTTPS connections
-        tcp dport 443 accept
-    }
-}
-```
-
-Restart the nftables service.
-
-```sh
-sudo systemctl restart nftables
 ```
 
 ### Use Certbot to enable HTTPS
