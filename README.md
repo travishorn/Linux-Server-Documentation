@@ -49,10 +49,6 @@ functionality or harden for additional security depending on your needs.
 19. [Connect to DB from a Next.js App](./19%20Connect%20to%20DB%20from%20a%20Next.js%20App.md)
 20. [Monitoring with Prometheus](./20%20Monitoring%20with%20Prometheus.md)
 
-## To Do
-
-- SSH agent
-
 ## License
 
 Copyright 2023 Travis Horn, licensed under [CC BY
