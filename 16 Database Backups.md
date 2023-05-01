@@ -1,6 +1,6 @@
 # Linux Server
 
-## Automatic Database Backups
+## Database Backups
 
 ### Prerequisites
 
@@ -65,7 +65,7 @@ Make the script executable.
 ```sh
 sudo chmod +x /usr/local/bin/backup_databases.sh
 ```
-### Configure systemd Service and Timer
+### Configure Automatic Backups with systemd
 
 Create `/etc/systemd/system/backup_databases.service`.
 
@@ -133,5 +133,5 @@ Or you could run the backup script.
 sudo /usr/local/bin/backup_databases.sh
 ```
 
-Note: This will run the entire script, including the command which removes
-backups 14 days or older.
+Note: Running the backup script will run the entire script, including the
+command which removes backups 14 days or older.

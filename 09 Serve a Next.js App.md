@@ -89,4 +89,5 @@ otherwise already in use.
 With the port forwarded correctly, you should be able to visit
 http://localhost:3000 and see the Next.js app.
 
-You may wish to manage the Node.js process using PM2. See separate guide.
+You may wish to manage the Node.js process using PM2. See [Manage Node.js
+Processes with PM2](10%20Manage%20Node.js%20Processes%20with%20PM2.md).

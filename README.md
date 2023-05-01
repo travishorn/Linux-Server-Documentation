@@ -43,7 +43,7 @@ functionality or harden for additional security depending on your needs.
 13. [Firewall Configuration with nftables](./13%20Firewall%20Configuration%20with%20nftables.md)
 14. [HTTPS SSL on nginx](./14%20HTTPS%20SSL%20on%20nginx.md)
 15. [Storing Data with MariaDB](./15%20Storing%20Data%20with%20MariaDB.md)
-16. [Automatic Database Backups](./16%20Automatic%20Database%20Backups.md)
+16. [Database Backups](./16%20Database%20Backups.md)
 17. [Database Backup Recovery](./17%20Database%20Backup%20Recovery.md)
 18. [Connect to DB from a Next.js App](./18%20Connect%20to%20DB%20from%20a%20Next.js%20App.md)
 19. [Monitoring with Prometheus](./19%20Monitoring%20with%20Prometheus.md)

@@ -5,7 +5,7 @@
 ### Prerequisites
 
 - The database is MariaDB
-- `mariabackup` is installed
+- `mariadb-backup` is installed
 - You have a compressed backup file containing the state of the database to
   which you want to recover
 
@@ -13,7 +13,7 @@
 
 Before continuing with data recovery, I highly recommend creating a manual
 backup, in case you need to revert back to the state before recovery started.
-(See separate guide).
+See [Database Backups](16%20Database%20Backups.md).
 
 ### Recover the Data
 
