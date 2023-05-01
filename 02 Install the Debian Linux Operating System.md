@@ -101,9 +101,9 @@ Choose your location and click **Continue**.
 
 Choose the keymap your keyboard uses and click **Continue**.
 
-Under **Hostname**, enter a descriptive hostname. Example: "myserver".
-Making the virtual machine's name in VirtualBox and the hostname here match is a
-good idea.
+Under **Hostname**, enter a descriptive hostname. Example: "myserver". Making
+the virtual machine's name in VirtualBox and the hostname here match is a good
+idea.
 
 Click **Continue**.
 
