@@ -52,7 +52,10 @@ By default, the app will be accessible on port 3000.
 
 ### Test the Application Server
 
-Open a web browser and visit http://[server IP address/hostname]:3000
+Open a web browser and visit http://[your server's IP address/hostname]:3000.
+
+If you're using a virtual machine, are working from the host machine, and you
+have port 3000 forwarded, you can visit http://localhost:3000.
 
 #### Forward the Port on VirtualBox
 

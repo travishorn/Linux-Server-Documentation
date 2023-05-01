@@ -2,6 +2,10 @@
 
 ## Set Up a MariaDB Database
 
+### Prerequisites
+
+- If using a virtual machine, port 3306 is forwarded
+
 ### Install MariaDB
 
 ```sh
@@ -96,36 +100,6 @@ Restart the nftables service.
 ```sh
 sudo systemctl restart nftables
 ```
-
-### Forward the Port on VirtualBox
-
-If you are using VirtualBox and you will be connecting to MariaDB from the host
-or a remote machine, you will need to forward port 3306.
-
-Open **Oracle VM VirtualBox Manager**.
-
-Click to highlight the server virtual machine.
-
-Click on **Settings**.
-
-Click **Network** in the pane on the left.
-
-Under the **Adapter 1** tab, click **Advanced**.
-
-Click **Port Forwarding**.
-
-Click the **Adds new port forwarding rule.** button on the right. It looks like
-a green diamond with a green "plus" sign on top of it.
-
-Under name, enter **MariaDB**.
-
-Under **Host Port**, enter **3306**.
-
-Under **Guest Port**, enter **3306**.
-
-Note that you can change the **Host Port** to another number if you are hosting
-other databases on port 3306 on other virtual machines or port 3306 is otherwise
-already in use on the host machine.
 
 ### Take Another Snapshot
 

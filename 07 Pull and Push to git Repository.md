@@ -12,7 +12,7 @@
 First, clone the repository on your development machine
 
 ```sh
-git clone ssh://[username]@[server IP address/hostname][path to repository]
+git clone ssh://[username]@[your server's IP address/hostname][path to repository]
 ```
 
 Example:
@@ -20,6 +20,9 @@ Example:
 ```sh
 git clone ssh://myuser@myserver/home/myuser/repos/myrepo
 ```
+
+Note: If you're using a virtual machine, you're cloning from the host machine,
+and you have port 22 forwarded, you can use `localhost` as the hostname.
 
 You will be prompted to enter the `myuser` user's password.
 

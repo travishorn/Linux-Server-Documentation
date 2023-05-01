@@ -6,6 +6,7 @@
 
 - A Node.js app (Next.js or otherwise) is servable
 - The Node.js app is not currently running
+- If using a virtual machine, port 3000 is forwarded
 
 ### Set Up pm2
 
@@ -35,7 +36,7 @@ Start the web app process.
 pm2 start ~/apps/ecosystem.config.js
 ```
 
-Check that the web app is running at http://[server IP address/hostname]:3000.
+Check that the web app is running at http://localhost:3000.
 
 Save the currently running configuration.
 

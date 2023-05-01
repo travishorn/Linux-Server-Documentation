@@ -5,6 +5,7 @@
 ### Prerequisites
 
 - A running web application on port 3000
+- If using a virtual machine, port 80 is forwarded
 
 ### Install nginx
 
@@ -12,38 +13,8 @@
 sudo apt update
 sudo apt install -y nginx
 ```
-
-#### Forward the Port on VirtualBox
-
-If you are using VirtualBox, you will need to forward port 80.
-
-Open **Oracle VM VirtualBox Manager**.
-
-Click to highlight the server virtual machine.
-
-Click on **Settings**.
-
-Click **Network** in the pane on the left.
-
-Under the **Adapter 1** tab, click **Advanced**.
-
-Click **Port Forwarding**.
-
-Click the **Adds new port forwarding rule.** button on the right. It looks like
-a green diamond with a green "plus" sign on top of it.
-
-Under name, enter **HTTP**.
-
-Under **Host Port**, enter **80**.
-
-Under **Guest Port**, enter **80**.
-
-Note that you can change the **Host Port** to another number if you are serving
-multiple apps on port **80** on other virtual machines or port 80 is otherwise
-already in use on the host machine.
-
-With the port forwarded correctly, you should be able to visit http://localhost
-and see the "Welcome to nginx!" page.
+You should be able to visit http://localhost and see the "Welcome to nginx!"
+page.
 
 ### Configure nginx
 
@@ -53,14 +24,9 @@ Edit the nginx configuration file at `/etc/nginx/sites-available/default`.
 Replace the `location /` block with the following:
 
 ```
-location / {
-    proxy_pass http://localhost:3000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-}
+location / { proxy_pass http://localhost:3000; proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection
+    'upgrade'; proxy_set_header Host $host; proxy_cache_bypass $http_upgrade; }
 ```
 
 Save and quit editing the file.
@@ -77,8 +43,11 @@ If successful, restart the nginx service to apply the changes.
 sudo systemctl restart nginx
 ```
 
-In your web browser, visit http://[server IP address/hostname] (or
-http://localhost if using a virtual machine). You should see your Node.js app.
+In your web browser, visit http://[your server's IP address/hostname]. You
+should see your Node.js app.
+
+If you're using a virtual machine, are working from the host machine, and you
+have port 80 forwarded, you can visit http://localhost.
 
 ### Block Direct App Access
 

@@ -6,6 +6,7 @@
 
 - nginx configured as a reverse proxy for a web application
 - a domain name (or scroll down to the "Self-Signed" section below)
+- If using a virtual machine, port 443 is forwarded
 
 ### Prepare your nginx Configuration
 
@@ -76,39 +77,10 @@ Certbot automatically generates the certificate and configures nginx for you. It
 also sets a timer that runs periodically that will automatically renew your
 certificate before it expires.
 
-#### Forward the Port on VirtualBox
-
-If you are using VirtualBox, you will need to forward port 443.
-
-Open **Oracle VM VirtualBox Manager**.
-
-Click to highlight the server virtual machine.
-
-Click on **Settings**.
-
-Click **Network** in the pane on the left.
-
-Under the **Adapter 1** tab, click **Advanced**.
-
-Click **Port Forwarding**.
-
-Click the **Adds new port forwarding rule.** button on the right. It looks like
-a green diamond with a green "plus" sign on top of it.
-
-Under name, enter **HTTPS**.
-
-Under **Host Port**, enter **443**.
-
-Under **Guest Port**, enter **443**.
-
-Note that you can change the **Host Port** to another number if you are serving
-multiple apps on port 443 on other virtual machines or port 443 is otherwise
-already in use on the host machine.
-
-With the port forwarded correctly, and the firewall allowing connections, you
-should be able to visit your domain using `https://` and see your web app. You
-can also visit it via `http://` and you should be automatically redirected to
-the `https://` URL.
+With the firewall allowing connections and the certificate installed, you should
+be able to visit your domain using `https://` and see your web app. You can also
+visit it via `http://` and you should be automatically redirected to the
+`https://` URL.
 
 Note that if you're using a self-signed certificate, your browser will probably
 warn you that the certificate is invalid. You can usually bypass this by

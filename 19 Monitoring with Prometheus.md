@@ -113,7 +113,11 @@ Restart the nftables service.
 sudo systemctl restart nftables
 ```
 
-Verify it works by going to http://localhost:9090.
+Verify it works by going to http://[your server's IP address/hostname]:9090.
+
+If you're using a virtual machine, are working from the host machine, and you
+have port 9090 forwarded, you can go to http://localhost:9090 on the host
+machine.
 
 ### Add Authentication
 
