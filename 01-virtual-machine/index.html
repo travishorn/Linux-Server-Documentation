@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736316666184">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736349813580">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Create a Virtual Machine with VirtualBox</title>
     <meta name="title" content="Create a Virtual Machine with VirtualBox">
-    <meta name="description" content="If you don't already have it, download and install Oracle VM VirtualBox Manager." />
+    <meta name="description" content="If you are installing your server on bare hardware, or you have another virtualization solution that you want to use, you can safely skip the steps on" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://travishorn.github.io/Linux-Server-Documentation/01-virtual-machine/" />
@@ -21,22 +21,22 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://travishorn.github.io/Linux-Server-Documentation/01-virtual-machine/">
     <meta property="og:title" content="Create a Virtual Machine with VirtualBox">
-    <meta property="og:description" content="If you don't already have it, download and install Oracle VM VirtualBox Manager.">
+    <meta property="og:description" content="If you are installing your server on bare hardware, or you have another virtualization solution that you want to use, you can safely skip the steps on">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://travishorn.github.io/Linux-Server-Documentation/01-virtual-machine/">
     <meta property="twitter:title" content="Create a Virtual Machine with VirtualBox">
-    <meta property="twitter:description" content="If you don't already have it, download and install Oracle VM VirtualBox Manager.">
+    <meta property="twitter:description" content="If you are installing your server on bare hardware, or you have another virtualization solution that you want to use, you can safely skip the steps on">
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../favicon.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=2.4.0.736316666184" rel="stylesheet" />
+    <link href="../resources/css/retype.css?v=2.4.0.736349813580" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736316666184" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736349813580" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736316666184" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736349813580" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -172,6 +172,39 @@
     </div>
 </div>
 
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>If you are installing your server on bare hardware, or you have another
+virtualization solution that you want to use, you can safely skip the steps on
+this page and go to the operating system installation steps.</p>
+<p>
+<div class="mb-6 px-5 py-4 flex justify-between relative border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded transition-colors duration-150">
+    <div class="flex items-center text-blue-500 dark:text-blue-400">
+        <span class="inline-block mb-px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" role="presentation" fill="currentColor"><path fill="none" d="M0 0h24v24H0z"/><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z"/></svg>
+        </span>
+        <span class="inline-block font-medium ml-2">Install the Debian Linux Operating System</span>
+    </div>
+    <div class="flex items-center text-xs text-gray-400 dark:text-dark-400">
+        <span>../02-debian/</span>
+    </div>
+    <a href="../02-debian/" class="absolute block inset-0"></a>
+</div>
+</p>
+        </div>
+    </div>
+</div>
 <p>If you don&#x27;t already have it,
 <a href="https://www.virtualbox.org/wiki/Downloads">download</a> and install Oracle VM
 VirtualBox Manager.</p>
@@ -182,8 +215,12 @@ VirtualBox Manager.</p>
 <p>Under <strong>Version</strong>, choose the Linux version you will be installing. Example:
 &quot;Debian 11 Bullseye (64-bit)&quot;.</p>
 <p>Click <strong>Next</strong>.</p>
-<p>Under <strong>Base Memory</strong>, choose half of the available memory.</p>
-<p>Under <strong>Processors</strong>, choose half of the available processors.</p>
+<p>Under <strong>Base Memory</strong>, choose an appropriate amount. Half of the available
+memory is a good choice, but you may want to choose less or more depending on
+your needs.</p>
+<p>Under <strong>Processors</strong>, choose an appropriate amount. Half of the available
+processors is a good choice, but you may want to choose less or more depending
+on your needs.</p>
 <p>Check the box for <strong>Enable EFI (special OSes only)</strong>.</p>
 <p>Click <strong>Next</strong>.</p>
 <p>Leave <strong>Create a Virtual Hard Disk Now</strong> selected and enter a disk size. It
@@ -258,7 +295,7 @@ looks like a green diamond with a red &quot;X&quot; over top of it.</p>
                                     <ul class="flex flex-wrap items-center text-sm">
                                     </ul>
                                 </div>
-                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>Copyright 2023 Travis Horn. <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Penguin icon by <a href="https://icons8.com/">Icons8</a></p></div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>Copyright 2023 Travis Horn <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Penguin icon by <a href="https://icons8.com/">Icons8</a></p></div>
                             </footer>
                         </div>
                     </div>
