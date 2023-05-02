@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://travishorn.github.io/Linux-Server-Documentation/sitemap.xml.gz
