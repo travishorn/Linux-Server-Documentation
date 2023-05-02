@@ -1,13 +1,20 @@
-# Linux Server
+---
+label: Access a Remote Shell with OpenSSH
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -4
+---
 
-## Access a Remote Shell with OpenSSH
+# Access a Remote Shell with OpenSSH
 
-### Prerequisites
+## Prerequisites
 
 - Linux is installed and a user(s) has been created
 - If using a virtual machine, port 22 is forwarded
 
-### Install OpenSSH on the Server
+## Install OpenSSH on the Server
 
 If you followed the guide [Install the Debian Linux Operating
 System](./02%20Install%20the%20Debian%20Linux%20Operating%20System), OpenSSH
@@ -20,7 +27,7 @@ sudo apt update
 sudo apt install -y openssh-server
 ```
 
-### Install OpenSSH on the Client
+## Install OpenSSH on the Client
 
 To connect to your server via OpenSSH, you will need to install it on the
 machine you want to connect *from*. This will depend on your operating system.
@@ -42,7 +49,7 @@ sudo apt install -y openssh-client
 
 If you're connecting from Mac OS, OpenSSH client may already be installed.
 
-### Connect
+## Connect
 
 On your workstation machine (not the server - this could also be the host
 machine if you're using a virtual machine), open up a **Terminal**.

@@ -1,15 +1,22 @@
-# Linux Server
+---
+label: HTTPS/SSL on nginx
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -15
+---
 
-## HTTPS/SSL on nginx
+# HTTPS/SSL on nginx
 
-### Prerequisites
+## Prerequisites
 
 - nginx configured as a reverse proxy for a web application
 - a domain name (or scroll down to the "Self-Signed" section below)
 - A firewall rule to accept traffic on TCP port 443 has been added
 - If using a virtual machine, port 443 is forwarded
 
-### Prepare your nginx Configuration
+## Prepare your nginx Configuration
 
 Edit `/etc/nginx/sites-available/default`
 
@@ -35,7 +42,12 @@ If all is well, reload nginx.
 sudo systemctl reload nginx
 ```
 
-### Use Certbot to enable HTTPS
+## Use Certbot to enable HTTPS
+
+Use Certbot if your server is public-facing and you are ready to install a real
+certificate signed by [Let's Encrypt](https://letsencrypt.org/) (a Certificate
+Authority which issues certificates for free). Skip to the next section if you
+just want to use a self-signed certificate.
 
 Install `certbot` and `python3-certbot-nginx`.
 
@@ -62,36 +74,12 @@ be able to visit your domain using `https://` and see your web app. You can also
 visit it via `http://` and you should be automatically redirected to the
 `https://` URL.
 
-Note that if you're using a self-signed certificate, your browser will probably
-warn you that the certificate is invalid. You can usually bypass this by
-clicking **Advanced** and **Proceed** or something similar.
+## Self-Signed Certificate
 
-### Take Another Snapshot
-
-If you are setting up the server on a virtual machine, follow these steps to
-take another snapshot.
-
-Shut down the machine
-
-```sh
-shutdown now
-```
-
-In VirtualBox, make sure the machine is selected and then click **Machine** >
-**Tools** > **Snapshots** from the menu at the top.
-
-Click the **Take** button.
-
-Under **Snapshot Name**, enter "HTTPS/SSL Set Up" and click **Ok**.
-
-Click the **Start** button again. The virtual machine will boot back up.
-
-### Self-Signed Certificate
-
-If you aren't ready to use a domain name with the server, you can use a
-self-signed certificate. Visitors to the site will receive a warning about the
-invalid certificate, but they can bypass it, making this a good option for
-testing and development.
+If you aren't ready to use a real certificate signed by an authority, you can
+use a self-signed certificate instead. Visitors to the site will receive a
+warning about the invalid certificate, but they can bypass it, making this a
+good option for testing and development.
 
 Make a directory to store the certificate files.
 
@@ -105,7 +93,7 @@ Change into that directory.
 cd /etc/nginx/ssl
 ```
 
-#### Generate a Certificate
+### Generate a Certificate
 
 If you have an actual certificate you want to use, you can skip this step.
 
@@ -121,7 +109,7 @@ like `localhost`.
 Two new files, `localhost.crt` and `localhost.key` are generated at
 `/etc/nginx/ssl`.
 
-#### Configuration
+### Configuration
 
 Edit `/etc/nginx/sites-available/default`.
 
@@ -165,6 +153,8 @@ You should now be able to visit https://localhost and see your web app. You can
 also visit http://localhost and you should be automatically redirected to
 https://localhost.
 
-Note that since you're using a self-signed certificate, your browser will
-probably warn you that the certificate is invalid. You can usually bypass this
-by clicking **Advanced** and **Proceed** or something similar.
+!!!warning
+Since you're using a self-signed certificate, your browser will probably warn
+you that the certificate is invalid. You can usually bypass this by clicking
+**Advanced** and **Proceed** or something similar.
+!!!

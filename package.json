@@ -1,0 +1,25 @@
+{
+  "name": "linux-server-documentation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A small collection of simple instructions for setting up and configuring a Linux server from scratch.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "retype watch",
+    "build": "retype build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/travishorn/Linux-Server-Documentation.git"
+  },
+  "keywords": [],
+  "author": "Travis Horn <travis@travishorn.com> (https://travishorn.com/)",
+  "license": "CC BY 4.0",
+  "bugs": {
+    "url": "https://github.com/travishorn/Linux-Server-Documentation/issues"
+  },
+  "homepage": "https://github.com/travishorn/Linux-Server-Documentation#readme",
+  "devDependencies": {
+    "retypeapp": "^2.4.0"
+  }
+}

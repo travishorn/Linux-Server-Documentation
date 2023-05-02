@@ -1,13 +1,20 @@
-# Linux Server
+---
+label: Pull from and Push to a git Repository
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -9
+---
 
-## Pull from and Push to a git Repository
+# Pull from and Push to a git Repository
 
-### Prerequisites
+## Prerequisites
 
 - The server has been set up as a git server
 - A bare repository has been created on the server
 
-### Working with the Remote Repository
+## Working with the Remote Repository
 
 First, clone the repository on your development machine
 
@@ -21,8 +28,10 @@ Example:
 git clone ssh://myuser@myserver/home/myuser/repos/myrepo
 ```
 
-Note: If you're using a virtual machine, you're cloning from the host machine,
-and you have port 22 forwarded, you can use `localhost` as the hostname.
+!!!
+If you're using a virtual machine, you're cloning from the host machine, and you
+have port 22 forwarded, you can use `localhost` as the hostname.
+!!!
 
 You will be prompted to enter the `myuser` user's password.
 
@@ -45,12 +54,14 @@ And you can push your changes to it.
 git push
 ```
 
-### SSH Key Authentication
+## SSH Key Authentication
 
-Note that you will need to share the `myuser` password with each developer who
-needs pull/push access. Developers will also need to enter the `myuser` user's
+!!!warning
+You will need to share the `myuser` password with each developer who needs
+pull/push access. Developers will also need to enter the `myuser` user's
 password each time they pull/push. This is not ideal. You can bypass this by
 setting up SSH keys if desired.
+!!!
 
 Make sure you have...
 
@@ -67,9 +78,10 @@ When all of the above is set up, you can clone the repository.
 git clone ssh://myuser@myserver/home/myuser/repos/myrepo
 ```
 
-Note that `myserver` here is the name of the configured host set up in
-`~/.ssh/config`, not necessarily the server's hostname (although they can be the
-same).
+!!!
+`myserver` here is the name of the configured host set up in `~/.ssh/config`,
+not necessarily the server's hostname (although they can be the same).
+!!!
 
 You will be asked for your SSH key passphrase (if any) rather than the server
 user's password. This eliminates the need to share that password.

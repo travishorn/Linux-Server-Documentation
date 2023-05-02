@@ -1,20 +1,27 @@
-# Linux Server
+---
+label: Storing Data with MariaDB
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -16
+---
 
-## Storing Data with MariaDB
+# Storing Data with MariaDB
 
-### Prerequisites
+## Prerequisites
 
 - A firewall rule to accept traffic on TCP port 3306 has been added
 - If using a virtual machine, port 3306 is forwarded
 
-### Install MariaDB
+## Install MariaDB
 
 ```sh
 sudo apt update
 sudo apt install -y mariadb-server
 ```
 
-### Create a Database and a User
+## Create a Database and a User
 
 Log in as the root system user.
 
@@ -37,9 +44,11 @@ CREATE USER '[username]'@'%' IDENTIFIED BY '[password]';
 Replace `[username]` and `[password]` with the actual credentials you want your
 web applications to use when they authenticate to the database.
 
-Warning: The `%` means that the user can connect from any IP address. Replace it
-with `localhost` to only allow local connections or replace it with an IP
-address to only allow connections from that IP address.
+!!!warning
+The `%` means that the user can connect from any IP address. Replace it with
+`localhost` to only allow local connections or replace it with an IP address to
+only allow connections from that IP address.
+!!!
 
 Grant database privileges to this user.
 
@@ -47,7 +56,9 @@ Grant database privileges to this user.
 GRANT ALL PRIVILEGES ON mydatabase.* TO '[username]'@'%';
 ```
 
-Note: The same warning as above applies to this `%`.
+!!!warning
+The same warning as above applies to this `%`.
+!!!
 
 Apply the privilege changes.
 
@@ -61,7 +72,7 @@ Exit the MariaDB REPL.
 EXIT;
 ```
 
-### Allow Remote Connections
+## Allow Remote Connections
 
 Edit `/etc/mysql/my.cnf`.
 
@@ -79,23 +90,3 @@ Restart the database service.
 ```sh
 sudo systemctl restart mariadb
 ```
-
-### Take Another Snapshot
-
-If you are setting up the server on a virtual machine, follow these steps to
-take another snapshot.
-
-Shut down the machine
-
-```sh
-shutdown now
-```
-
-In VirtualBox, make sure the machine is selected and then click **Machine** >
-**Tools** > **Snapshots** from the menu at the top.
-
-Click the **Take** button.
-
-Under **Snapshot Name**, enter "MariaDB Installed" and click **Ok**.
-
-Click the **Start** button again. The virtual machine will boot back up.

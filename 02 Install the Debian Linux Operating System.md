@@ -1,13 +1,20 @@
-# Linux Server
+---
+label: Install the Debian Linux Operating System
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -2
+---
 
-## Install the Debian Linux Operating System
+# Install the Debian Linux Operating System
 
-### Prerequisites
+## Prerequisites
 
 - A physical machine is ready for fresh operating system installation or a new
   virtual machine has been created
 
-### Download
+## Download
 
 Go to the [Installing Debian via the Internet
 page](https://www.debian.org/distrib/netinst).
@@ -18,7 +25,7 @@ your server uses. If you're not sure, it's probably **amd64**.
 The ISO image will start downloading. Make a note of where this ISO image is
 stored on your computer.
 
-### Create Installation Media
+## Create Installation Media
 
 If you're setting up the server on a virtual machine, you can skip this section.
 Otherwise, if you're setting up a physical machine, you'll need to follow the
@@ -34,8 +41,10 @@ install Rufus.
 
 Plug a USB flash drive into your machine.
 
-Warning: The contents of this flash drive will be erased in the next few steps.
-Make a copy if you don't want to lose anything.
+!!!warning
+The contents of this flash drive will be erased in the next few steps. Make a
+copy if you don't want to lose anything.
+!!!
 
 Click **Start** and look for **Rufus**. Click it to launch Rufus.
 
@@ -51,7 +60,7 @@ Click **START**.
 Once Rufus is finished, remove the flash drive from your machine and plug it
 into the server machine you're setting up. Make sure the machine is off.
 
-### Attaching the ISO
+## Attaching the ISO
 
 If you're setting up the server on a physical machine, you can skip this
 section. Otherwise, if you're setting up a virtual machine, you'll need to
@@ -81,7 +90,7 @@ Click **Choose**.
 
 Click **OK**.
 
-### Install the Operating System
+## Install the Operating System
 
 If you're setting up a physical machine, press the power button to boot it up.
 You may need to press a specific key on the keyboard to access the boot menu.
@@ -171,10 +180,7 @@ Under **Write the changes to disks and configure LVM?**, choose **Yes**.
 Click **Continue**.
 
 Under **Amount of volume group to use for guided partitioning**, leave the
-default entered.
-
-Note: The default value should be the maximum. You can also enter "max" to
-ensure the volume group is the maximum size.
+default ("max") entered.
 
 Click **Continue**.
 
@@ -213,7 +219,7 @@ complete. Click **Continue**.
 
 The machine will reboot and the login screen will appear.
 
-### Set up `sudo`
+## Set up `sudo`
 
 Logging in and doing things as the `root` user is not recommended. Instead, you
 should log in and do things with you user account, and only do things as `root`
@@ -240,23 +246,3 @@ installation. All members of the `sudo` group can execute commands as `root`
 when necessary using `sudo`.
 
 You are now ready to use your new server.
-
-### Take Another Snapshot
-
-If you are setting up the server on a virtual machine, follow these steps to
-take another snapshot.
-
-Shut down the machine
-
-```sh
-shutdown now
-```
-
-In VirtualBox, make sure the machine is selected and then click **Machine** >
-**Tools** > **Snapshots** from the menu at the top.
-
-Click the **Take** button.
-
-Under **Snapshot Name**, enter "Operating System Installed" and click **Ok**.
-
-Click the **Start** button again. The virtual machine will boot back up.

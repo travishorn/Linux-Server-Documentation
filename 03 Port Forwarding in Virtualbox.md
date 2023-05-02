@@ -1,6 +1,13 @@
-# Linux Server
+---
+label: Port Forwarding in VirtualBox
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -3
+---
 
-## Port Forwarding in VirtualBox
+# Port Forwarding in VirtualBox
 
 This guide is only necessary if your server is running on a virtual machine. Any
 time you need to connect to your virtual machine remotely, you'll need to make
@@ -31,10 +38,12 @@ Under **Host Port**, enter the port number you want the host machine to listen
 on. This can be anything, but for simplicity, I recommend using the same as the
 guest port. For SSH, use port **22**.
 
-Note: If you have multiple virtual machines which you will be SSHing into, or
-you already have an SSH server running on the host machine itself, you may want
-to enter a different **Host Port**. In that case, choose any number you like
+!!!
+If you have multiple virtual machines which you will be SSHing into, or you
+already have an SSH server running on the host machine itself, you may want to
+enter a different **Host Port**. In that case, choose any number you like
 between 1024 and 49152. Just make sure it is not in use by any other service.
+!!!
 
 Under **Guest Port**, enter the port number that your virtual machine is
 listening on. For SSH, use port **22**.
@@ -43,7 +52,7 @@ Click **OK**.
 
 Click **OK** again.
 
-### Other Ports
+## Other Ports
 
 For this series of guides, we will be setting up services that listen on the
 following ports. You should set up port forwarding for each of them:

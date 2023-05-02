@@ -1,21 +1,28 @@
-# Linux Server
+---
+label: Database Backup Recovery
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -17
+---
 
-## Database Backup Recovery
+# Database Backup Recovery
 
-### Prerequisites
+## Prerequisites
 
 - The database is MariaDB
 - `mariadb-backup` is installed
 - You have a compressed backup file containing the state of the database to
   which you want to recover
 
-### Take a Manual Backup
+## Take a Manual Backup
 
 Before continuing with data recovery, I highly recommend creating a manual
 backup, in case you need to revert back to the state before recovery started.
 See [Database Backups](16%20Database%20Backups.md).
 
-### Recover the Data
+## Recover the Data
 
 Create a directory for storing the recovered files temporarily. It can be named
 anything you like. Here it is named `recovered`.

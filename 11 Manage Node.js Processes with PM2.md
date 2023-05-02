@@ -1,14 +1,21 @@
-# Linux Server
+---
+label: Manage Node.js Processes with PM2
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -11
+---
 
-## Manage Node.js Processes with PM2
+# Manage Node.js Processes with PM2
 
-### Prerequisites
+## Prerequisites
 
 - A Node.js app (Next.js or otherwise) is servable
 - The Node.js app is not currently running
 - If using a virtual machine, port 3000 is forwarded
 
-### Setup
+## Setup
 
 Install PM2 globally using npm.
 
@@ -63,23 +70,3 @@ Try restarting the machine to test it.
 
 You will probably want the server serving the web app(s) on port 80 and/or port
 443 for HTTP/HTTPS. For that, you will have to set up a reverse proxy.
-
-### Take Another Snapshot
-
-If you are setting up the server on a virtual machine, follow these steps to
-take another snapshot.
-
-Shut down the machine.
-
-```sh
-shutdown now
-```
-
-In VirtualBox, make sure the machine is selected and then click **Machine** >
-**Tools** > **Snapshots** from the menu at the top.
-
-Click the **Take** button.
-
-Under **Snapshot Name**, type "PM2 Installed" and click **Ok**.
-
-Click the **Start** button again. The virtual machine will boot back up.

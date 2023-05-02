@@ -1,6 +1,13 @@
-# Linux Server
+---
+label: Firewall Configuration with nftables
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -14
+---
 
-## Firewall Configuration with nftables
+# Firewall Configuration with nftables
 
 Debian Linux comes with nftables installed by default.
 
@@ -64,7 +71,7 @@ recently made to the configuration, just restart the service.
 sudo systemctl restart nftables
 ```
 
-### Add a New Firewall Rule
+## Add a New Firewall Rule
 
 Any time you want to allow traffic for a new service on a specific port, you
 must add a new firewall rule.
@@ -84,8 +91,9 @@ if you want to add a rule that allows port 3306, the line will look like this:
 tcp dport {ssh,http,3306} accept
 ```
 
-Note that some ports have aliases (like `ssh` and `http`) that nftables
-recognizes.
+!!!
+Some ports have aliases (like `ssh` and `http`) that nftables recognizes.
+!!!
 
 Restart nftables to apply the new rules.
 
@@ -93,7 +101,7 @@ Restart nftables to apply the new rules.
 sudo systemctl restart nftables
 ```
 
-### More Rules
+## More Rules
 
 For this series of guides, we will be setting up services that listen on the
 following ports. You should set up firewall rules for all of them:

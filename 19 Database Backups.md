@@ -1,22 +1,29 @@
-# Linux Server
+---
+label: Database Backups
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -19
+---
 
-## Database Backups
+# Database Backups
 
-### Prerequisites
+## Prerequisites
 
 - MariaDB installed
 - One or more databases created
 - MariaDB has a `root` user which authenticates with the local filesystem
   account
 
-### Install the Backup Utility
+## Install the Backup Utility
 
 ```sh
 sudo apt update
 sudo apt install -y mariadb-backup
 ```
 
-### Create a Backup Script
+## Create a Backup Script
 
 Create a backup script at `/usr/local/bin/backup_databases.sh`.
 
@@ -65,7 +72,7 @@ Make the script executable.
 ```sh
 sudo chmod +x /usr/local/bin/backup_databases.sh
 ```
-### Configure Automatic Backups with systemd
+## Configure Automatic Backups with systemd
 
 Create `/etc/systemd/system/backup_databases.service`.
 
@@ -119,7 +126,7 @@ sudo systemctl start backup_databases.timer
 At this point, all MariaDB databases will be backed up to `/var/mariadb/backup`
 every day at midnight.
 
-### Manually Backing Up Databases
+## Manually Backing Up Databases
 
 You can back up databases at any time.
 
@@ -133,5 +140,7 @@ Or you could run the backup script.
 sudo /usr/local/bin/backup_databases.sh
 ```
 
-Note: Running the backup script will run the entire script, including the
-command which removes backups 14 days or older.
+!!!warning
+Running the backup script will run the entire script, including the command
+which removes backups 14 days or older.
+!!!

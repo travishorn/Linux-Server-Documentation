@@ -1,12 +1,19 @@
-# Linux Server
+---
+label: Continuous Integration
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -12
+---
 
-## Continuous Integration
+# Continuous Integration
 
-### Prerequisites
+## Prerequisites
 
 - A Node.js app (Next.js or otherwise) is being managed by PM2
 
-### Set up CI
+## Set up CI
 
 Create a post-receive git hook by creating a file named `~/repos/[repo
 name]/hooks/post-receive`.

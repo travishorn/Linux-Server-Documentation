@@ -1,13 +1,20 @@
-# Linux Server
+---
+label: Create a New git Repository
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -7
+---
 
-## Create a New git Repository
+# Create a New git Repository
 
-### Prerequisites
+## Prerequisites
 
 - The server has been set up as a git server
 - You are logged in as the non-root user
 
-### Create and set permissions
+## Create and set permissions
 
 Initialize a bare repository in the home directory.
 

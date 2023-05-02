@@ -1,6 +1,13 @@
-# Linux Server
+---
+label: Create a Virtual Machine with VirtualBox
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -1
+---
 
-## Create a Virtual Machine with VirtualBox
+# Create a Virtual Machine with VirtualBox
 
 If you don't already have it,
 [download](https://www.virtualbox.org/wiki/Downloads) and install Oracle VM
@@ -31,8 +38,10 @@ Leave **Create a Virtual Hard Disk Now** selected and enter a disk size. It
 should probably be at least 20 GB. Choose a size that will accomodate any
 software, application files, and database data you will need.
 
-Note: VirtualBox will not use all of the specified space immediately. It will
-only use what it needs, up to a maximum of whatever you specify.
+!!!
+VirtualBox will not use all of the specified space immediately. It will only use
+what it needs, up to a maximum of whatever you specify.
+!!!
 
 Click **Next**.
 
@@ -58,16 +67,5 @@ Click **Audio** from the pane on the left.
 Uncheck **Enable Audio**.
 
 Click **OK**.
-
-Click the name of the virtual machine you just created from the list on the left
-to highlight it.
-
-Click **Machine** > **Tools** > **Snapshots** from the menu at the top.
-
-Click the **Take** button.
-
-Under **Snapshot Name**, enter "No Operating System".
-
-Click **Ok**.
 
 At this point, you can continue by installing the operating system.

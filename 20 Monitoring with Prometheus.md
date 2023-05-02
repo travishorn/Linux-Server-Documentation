@@ -1,13 +1,20 @@
-# Linux Server
+---
+label: Monitoring with Prometheus
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -20
+---
 
-## Monitoring with Prometheus
+# Monitoring with Prometheus
 
-### Prerequisites
+## Prerequisites
 
 - A firewall rule to accept traffic on TCP port 9090 has been added
 - If using a virtual machine, port 9090 is forwarded
 
-### Installation
+## Installation
 
 Go to https://prometheus.io/download/.
 
@@ -26,8 +33,10 @@ In your terminal, download the file at the copied URL.
 wget https://github.com/prometheus/prometheus/releases/download/v2.37.6/prometheus-2.37.6.linux-amd64.tar.gz
 ```
 
-Note: The URL in the line above is just an example, use the actual URL you
-copied earlier.
+!!!
+The URL in the line above is just an example, use the actual URL you copied
+earlier.
+!!!
 
 The file will be downloaded to your machine. Unzip it.
 
@@ -104,7 +113,7 @@ If you're using a virtual machine, are working from the host machine, and you
 have port 9090 forwarded, you can go to http://localhost:9090 on the host
 machine.
 
-### Add Authentication
+## Add Authentication
 
 Right now, anyone who visits the URL will see all monitoring information. This
 could leak sensitive data. Prometheus has built-in basic authentication
@@ -173,7 +182,7 @@ sudo systemctl restart prometheus
 Now, when you go to http://localhost:9090, a username/password prompt will
 appear. Enter the username and password you chose earlier to gain access.
 
-### Adding an Exporter
+## Adding an Exporter
 
 Prometheus comes with some basic metrics to monitor by default, but you'll want
 to use "exporters" which provide access to even more metrics. There are metrics

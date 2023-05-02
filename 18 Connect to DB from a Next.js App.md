@@ -1,13 +1,20 @@
-# Linux Server
+---
+label: Connect to MariaDB from a Next.js App
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -18
+---
 
-## Connect to MariaDB from a Next.js App
+# Connect to MariaDB from a Next.js App
 
-### Prequisites
+## Prequisites
 
 - A running Next.js app
 - A running MariaDB (or MySQL) instance with user access configured
 
-### Install Dependencies
+## Install Dependencies
 
 This solution uses `serverless-mysql`. Install it as a dependency.
 
@@ -15,7 +22,7 @@ This solution uses `serverless-mysql`. Install it as a dependency.
 npm install serverless-mysql
 ```
 
-### Set Environment Variables
+## Set Environment Variables
 
 Set the following environment variables in whichever way makes sense for your
 situation. If you are connecting to a development database server from a
@@ -32,7 +39,7 @@ DB_PASSWORD= [database user password]
 
 You may need to change the host or the port depending on your setup.
 
-### Create a Database Connection File
+## Create a Database Connection File
 
 Create a new file called `lib/db.js` in the root directory of your app.
 
@@ -62,7 +69,7 @@ export default async function executeQuery({ query, values }) {
 
 We'll import this file into any file that needs to connect to the database.
 
-### Create an API Route
+## Create an API Route
 
 Create a new file called `pages/api/message.ts`. Feel free to change "`message`"
 to something more appropriate for your application.
@@ -112,7 +119,7 @@ application.
 At this point, (as long as the app is running) you can access the endpoint at
 `http://localhost:3000/api/message`.
 
-### Use this Endpoint on Client-side Pages
+## Use this Endpoint on Client-side Pages
 
 Inside a client-side page like `pages/index.tsx`, import the `useState` and
 `useEffect` functions from `react`.

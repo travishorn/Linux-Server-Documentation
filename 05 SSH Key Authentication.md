@@ -1,13 +1,20 @@
-# Linux Server
+---
+label: Access a Remote Shell with OpenSSH
+icon: file
+author:
+  name: Travis Horn
+  email: travis@travishorn.com
+order: -5
+---
 
-## SSH Key Authentication
+# SSH Key Authentication
 
-### Prerequisites
+## Prerequisites
 
 - OpenSSH server is running on your server
 - OpenSSH client is installed on your workstation
 
-### Prepare the Server
+## Prepare the Server
 
 This section needs to be done once per local user account on the server.
 
@@ -41,7 +48,7 @@ chmod 600 ~/.ssh/authorized_keys
 OpenSSH Server will give user account access to anyone who can provide a private
 key that matches the public keys stored in that file.
 
-### Generate an SSH Key Pair
+## Generate an SSH Key Pair
 
 Next, create a key pair. The public key will be added to the previously created
 `authorized_keys` file.
@@ -72,10 +79,12 @@ For example:
 ssh-keygen -f myname@work-2023-05-01 -C myname@work-2023-05-01
 ```
 
-Note that you can actually replace `[your name]@[location of
-workstation]-[timestamp]` with anything you want. But I recommend the above
-because it will help identify a key by the name of the person it belongs to, the
-location it will be used from, and the date it was created.
+!!!
+You can actually replace `[your name]@[location of workstation]-[timestamp]`
+with anything you want. But I recommend the above because it will help identify
+a key by the name of the person it belongs to, the location it will be used
+from, and the date it was created.
+!!!
 
 Upon running the command, you will be asked for a passphrase. You can choose
 anything you want here, or you can leave it blank. Make sure you understand the
@@ -96,7 +105,7 @@ user on any device which has this key entered into its `authorized_keys` file
 grants you access to the user account (as long as you can provide the private
 key).
 
-### Add a Public Key to a User
+## Add a Public Key to a User
 
 Once you have a key pair, you'll want to add the public key to a local user
 account on the server.
@@ -118,7 +127,7 @@ you have port 22 forwarded, you can use `localhost` as your server's hostname.
 The command will need the user's current password to log in and copy the public
 key.
 
-### Connecting to the Server using an SSH Key
+## Connecting to the Server using an SSH Key
 
 From your workstation, connect to the server, providing the SSH private key for
 authentication.
@@ -130,7 +139,7 @@ ssh [your username]@[your server's IP address/hostname] -i ~/.ssh/[private key f
 You will be asked for the key pair's passphrase (if any). Once authenticated,
 you will be connected to your server as before.
 
-### Using a Configured Host
+## Using a Configured Host
 
 The command you must execute to connect to your server via SSH is tedious to
 type out. You can alleviate this with a configured host.
@@ -153,7 +162,7 @@ With that file saved, you can execute the much shorter `ssh` command.
 ssh myserver
 ```
 
-### Disabling Password Authentication
+## Disabling Password Authentication
 
 Once SSH key authentication is set up and working correctly, you may want to
 disable the less-secure password authentication.
@@ -170,7 +179,7 @@ Restart the SSH server.
 sudo systemctl restart sshd
 ```
 
-### Removing Access
+## Removing Access
 
 If you need to remove access from a particular key pair, edit the server user's
 `~/.ssh/authorized_keys` file. and delete the line which has the public key you
