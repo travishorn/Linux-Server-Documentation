@@ -71,8 +71,9 @@ Click **Storage** from the pane on the left.
 
 Under **Storage Devices**, click to highlight **Controller: IDE**.
 
-Click the **Remove Controller** button. It is near the bottom of the window and
-looks like a green diamond with a red "X" over top of it.
+Click the **Remove Controller** button ![an icon of a green diamond with a red X
+over top of it](/images/virtualbox-remove-controller-button.png). It is near the
+bottom of the window.
 
 Click **Audio** from the pane on the left.
 

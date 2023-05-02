@@ -93,8 +93,9 @@ Click **Storage** from the pane on the left.
 
 Under **Storage Devices**, click to highlight **Controller: SATA**
 
-Click the **Adds optical drive.** button. It is next to "Controller: SATA" and
-looks like a blue disc with a green "plus" over top of it.
+Click the **Adds optical drive.** button ![an icon of a blue disc with a green
+plus sign over top of it](/images/virtualbox-adds-optical-drive-button.png). It
+is next to the text "Controller: SATA".
 
 The **Optical Disk Selector** window appears. Click the **Add** button.
 
@@ -265,3 +266,6 @@ installation. All members of the `sudo` group can execute commands as `root`
 when necessary using `sudo`.
 
 You are now ready to use your new server.
+
+Next, you will probably want to configure port forwarding so you can enable
+remote connections to the server.

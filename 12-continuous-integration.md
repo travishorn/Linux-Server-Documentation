@@ -11,7 +11,10 @@ order: -12
 
 ## Prerequisites
 
-- A Node.js app (Next.js or otherwise) is being managed by PM2
+- A Node.js app (Next.js or otherwise) has its source code hosted in a bare git
+  repository on the server (for example, in `~/repos`)
+- The app has been cloned to the server (for example, in `~/apps`)
+- The app is being run and managed by PM2
 
 ## Set up CI
 
@@ -31,7 +34,21 @@ Make the hook executable.
 chmod +x ~/repos/[repo name]/hooks/post-receive
 ```
 
-Every time changes are pushed to the repository, the post-receive hook will
-execute, pulling in the new changes to the running application. Once the changes
-are pulled in, PM2 will detect the file changes, rebuild the app, and restart
-the server.
+The setup is complete. Here is the process this continuous integration
+solution follows:
+
+1. Changes are pushed to the hosted bare repository (from a development machine,
+for example)
+2. The post-receive hook in the bare repository is automatically executed
+3. The hook pulls the changes from the bare repository to the cloned (running)
+   app
+4. PM2 is watching the cloned repository's files and detects the file changes
+5. PM2 executes the script defined in `~/apps/ecosystem.config.js`
+6. The app is rebuilt and restarted
+
+All of this happens automatically when changes are pushed to the repository.
+
+For now, the app is accessible directly on port 3000. Ultimately, you will
+probably want to serve the Node.js app(s) behind a reverse proxy like
+[nginx](https://www.nginx.com/) for improved security, load balancing, caching,
+advanced URL rewriting, and simplified deployment.

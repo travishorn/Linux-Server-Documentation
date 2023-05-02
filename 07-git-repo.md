@@ -24,5 +24,5 @@ git init --bare ~/repos/[repo name]
 
 Change `[repo name]` to a name of your choosing. Example: `my-app`
 
-Now developers who have the `git` user's credentials can clone, pull from, and
+Now developers who can authenticate as this local user can clone, pull from, and
 push to this repository.

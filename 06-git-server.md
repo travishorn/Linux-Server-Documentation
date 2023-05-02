@@ -16,7 +16,7 @@ order: -6
 
 ## Install git
 
-If it isn't already installed, install git.
+If it isn't already installed, install [git](https://git-scm.com/).
 
 ```sh
 sudo apt update
@@ -32,13 +32,19 @@ git config --global init.defaultBranch master
 ```
 
 Feel free to change the name `master` above to anything you like. While `master`
-is common, so is `main`.
+is the traditional default, `main` is also common.
 
-Configure git to reconcile divergent branches.
+Configure git to reconcile divergent branches by merging changes, rather than
+rebasing.
 
 ```sh
 git config --global pull.rebase false
 ```
+
+!!!
+`pull.rebase false` is a preference. But either `true` or `false`, the
+configuration option must be set.
+!!!
 
 ## Create Storage Directory
 
@@ -49,6 +55,6 @@ create a separate directory for them.
 mkdir ~/repos
 ```
 
-At this point, the server is set up to store git repositories. Next, you should
-start creating new repositories on the server that they can pull from and push
+Your server is now ready to host git repositories. Next, you should start
+creating new repositories on the server that developers can pull from and push
 to.

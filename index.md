@@ -1,5 +1,5 @@
 ---
-label: Linux Server Documentation
+label: Home
 author:
   name: Travis Horn
   email: travis@travishorn.com

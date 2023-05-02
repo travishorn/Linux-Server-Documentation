@@ -1,6 +1,8 @@
 branding:
-  title: Linux Server
-  label: Docs
+  title: Linux Server Documentation
+  logo: images/penguin-black.png
+  logoDark: images/penguin-white.png
+favicon: images/penguin-black.png
 footer:
   copyright: "Copyright 2023 Travis Horn [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Penguin icon by [Icons8](https://icons8.com/)"
 url: https://travishorn.github.io/Linux-Server-Documentation
