@@ -20,7 +20,8 @@ order: -17
 
 Before continuing with data recovery, I highly recommend creating a manual
 backup, in case you need to revert back to the state before recovery started.
-See [Database Backups](16%20Database%20Backups.md).
+
+[!ref](/17-database-backups.md)
 
 ## Recover the Data
 

@@ -16,11 +16,14 @@ order: -4
 
 ## Install OpenSSH on the Server
 
-If you followed the guide [Install the Debian Linux Operating
-System](./02%20Install%20the%20Debian%20Linux%20Operating%20System), OpenSSH
-server is installed and running already. You can skip this section.
+OpenSSH server may already be installed on your server. Get the status of the
+`sshd` service.
 
-Otherwise, install OpenSSH server.
+```sh
+systemctl status sshd
+```
+
+If the service isn't recognized, install it.
 
 ```sh
 sudo apt update

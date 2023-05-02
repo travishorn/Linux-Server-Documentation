@@ -65,5 +65,7 @@ Open a web browser and visit http://[your server's IP address/hostname]:3000.
 If you're using a virtual machine, are working from the host machine, and you
 have port 3000 forwarded, you can visit http://localhost:3000.
 
-You may wish to manage the Node.js process using PM2. See [Manage Node.js
-Processes with PM2](10%20Manage%20Node.js%20Processes%20with%20PM2.md).
+!!!
+This is a simple setup. You may want to manage your Node.js processes using a
+manager like PM2.
+!!!

@@ -69,8 +69,9 @@ Make sure you have...
 - added your public key to the server user's `authorized_keys` file
 - added your server as a configured host on your workstation
 
-All of those tasks can be found in the guide [SSH Key
-Authentication](./05%20SSH%20Key%20Authentication.md).
+All of those tasks can be found in the OpenSSH guide.
+
+[!ref](/04-openssh.md)
 
 When all of the above is set up, you can clone the repository.
 
