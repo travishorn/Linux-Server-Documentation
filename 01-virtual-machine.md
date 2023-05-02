@@ -9,6 +9,14 @@ order: -1
 
 # Create a Virtual Machine with VirtualBox
 
+!!!
+If you are installing your server on bare hardware, or you have another
+virtualization solution that you want to use, you can safely skip the steps on
+this page and go to the operating system installation steps.
+
+[!ref](/02-debian.md)
+!!!
+
 If you don't already have it,
 [download](https://www.virtualbox.org/wiki/Downloads) and install Oracle VM
 VirtualBox Manager.
@@ -26,9 +34,13 @@ Under **Version**, choose the Linux version you will be installing. Example:
 
 Click **Next**.
 
-Under **Base Memory**, choose half of the available memory.
+Under **Base Memory**, choose an appropriate amount. Half of the available
+memory is a good choice, but you may want to choose less or more depending on
+your needs.
 
-Under **Processors**, choose half of the available processors.
+Under **Processors**, choose an appropriate amount. Half of the available
+processors is a good choice, but you may want to choose less or more depending
+on your needs.
 
 Check the box for **Enable EFI (special OSes only)**.
 

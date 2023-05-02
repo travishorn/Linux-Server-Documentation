@@ -11,13 +11,12 @@ order: -2
 
 ## Prerequisites
 
-- A physical machine is ready for fresh operating system installation or a new
-  virtual machine has been created
+- A new virtual machine has been created or a physical machine is ready for fresh operating system installation
 
 ## Download
 
-Go to the [Installing Debian via the Internet
-page](https://www.debian.org/distrib/netinst).
+Go to the [Installing Debian via the
+Internet](https://www.debian.org/distrib/netinst) page.
 
 Under the section labeled **Small CDs or USB sticks**, click the architecture
 your server uses. If you're not sure, it's probably **amd64**.
@@ -25,16 +24,19 @@ your server uses. If you're not sure, it's probably **amd64**.
 The ISO image will start downloading. Make a note of where this ISO image is
 stored on your computer.
 
-## Create Installation Media
+The next steps will depend on whether you are installing the operating system to
+physical hardware or to a virtual machine. Please choose the tab below that
+corresponds to your installation.
 
-If you're setting up the server on a virtual machine, you can skip this section.
-Otherwise, if you're setting up a physical machine, you'll need to follow the
-steps in this section to create a bootable flash drive with the ISO loaded.
++++ Physical Hardware
+
+If you're setting up a physical machine, you'll need to follow the steps in this
+section to create a bootable flash drive with the ISO loaded.
 
 Go to [rufus.ie](https://rufus.ie).
 
 Under the **Download** section, click **Rufus 3.22** (the version number might
-be different).
+be different, depending on when you are reading this).
 
 Once the download completes, run the installer and follow its instructions to
 install Rufus.
@@ -57,15 +59,28 @@ highlight it, then click **Open**.
 
 Click **START**.
 
-Once Rufus is finished, remove the flash drive from your machine and plug it
-into the server machine you're setting up. Make sure the machine is off.
+Once Rufus is finished creating the installation media, remove the flash drive
+from your workstation.
+
+### Boot Up the Server
+
+Make sure your server machine is powered off.
+
+Plug the flash drive into the server.
+
+Press the power button to boot it up.
+
+Access the boot menu. You may need to press a specific key on the keyboard.
+Watch your screen for instructions. If you miss it, you can restart the machine
+and try again. The goal is to get to the boot menu and boot from the inserted
+USB drive that has the Debian installation ISO loaded.
+
++++ Virtual Machine
 
 ## Attaching the ISO
 
-If you're setting up the server on a physical machine, you can skip this
-section. Otherwise, if you're setting up a virtual machine, you'll need to
-follow the steps in this section to attach the ISO image you downloaded earlier
-as an optical disk.
+If you're setting up a virtual machine, you'll need to follow the steps in this
+section to attach the ISO image you downloaded earlier as an optical disk.
 
 Open **Oracle VM VirtualBox Manager**.
 
@@ -90,19 +105,21 @@ Click **Choose**.
 
 Click **OK**.
 
+### Boot Up the Virtual Machine
+
+Click the **Start** button in **Oracle VM VirtualBox Manager**. Shortly, a
+window will appear containing your virtual machine.
+
++++
+
 ## Install the Operating System
 
-If you're setting up a physical machine, press the power button to boot it up.
-You may need to press a specific key on the keyboard to access the boot menu.
-Watch your screen for instructions. If you miss it, you can restart the machine
-and try again. The goal is to get to the boot menu and boot from the inserted
-USB drive that has the Debian installation ISO loaded.
+Once the Debian installater is booted, you will see a screen with some
+installation options.
 
-Otherwise, if you're setting up a virtual machine, click the **Start** button in
-**Oracle VM VirtualBox Manager**. Shortly, a window will appear containing your
-virtual machine.
-
-Make sure **Graphical install** is selected and press **Enter**.
+Make sure **Graphical install** is selected and press **Enter**. If you don't
+make a selection within a few seconds, **Graphical install** will be
+automatically chosen.
 
 Choose your language and click **Continue**.
 
@@ -110,9 +127,12 @@ Choose your location and click **Continue**.
 
 Choose the keymap your keyboard uses and click **Continue**.
 
-Under **Hostname**, enter a descriptive hostname. Example: "myserver". Making
-the virtual machine's name in VirtualBox and the hostname here match is a good
-idea.
+Under **Hostname**, enter a descriptive hostname. Example: "myserver".
+
+!!!
+If you're using a virtual machine, making the virtual machine's name in
+VirtualBox and the hostname here match is a good idea.
+!!!
 
 Click **Continue**.
 
@@ -133,8 +153,8 @@ management software.
 
 Click **Continue**.
 
-Under **Full name for the new user**, enter your name. First and last is good
-enough. It's just something to identify you on the system.
+Under **Full name for the new user**, enter your name. First and last name is
+good enough. It's just something to identify you on the system.
 
 Click **Continue**.
 
@@ -155,7 +175,7 @@ management software.
 Click **Continue**.
 
 Under **Select your time zone**, click to highlight the timezone in use where
-you are located.
+the server is located.
 
 Click **Continue**.
 
@@ -165,8 +185,9 @@ set up LVM**.
 Click **Continue**.
 
 Under **Select disk to partition**, make sure the correct hard disk is selected.
-There may only be one option. The size should be near what you entered for the
-**Disk Size** when creating the virtual machine.
+There may only be one option. The size should match the actual hard drive in the
+machine (or whatever size you entered for the **Disk Size** when creating the
+virtual machine.)
 
 Click **Continue**.
 
@@ -222,7 +243,7 @@ The machine will reboot and the login screen will appear.
 ## Set up `sudo`
 
 Logging in and doing things as the `root` user is not recommended. Instead, you
-should log in and do things with you user account, and only do things as `root`
+should log in and do things with your user account, and only do things as `root`
 when necessary using `sudo`. We have to install and configure `sudo` first.
 
 Log in as `root` with the password you chose during installation.
@@ -230,10 +251,8 @@ Log in as `root` with the password you chose during installation.
 Install `sudo`.
 
 ```sh
-apt install sudo
+apt install -y sudo
 ```
-
-When asked to continue, press **Enter**.
 
 Add your user account to the `sudo` group.
 

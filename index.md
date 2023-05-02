@@ -15,10 +15,10 @@ server from scratch.
 This guide is intended for novice system administrators or even advanced ones
 that are not familiar with Linux, nginx, or some of the other covered topics.
 
-Includes OS, SSH, git, Node.js, nginx, MariaDB, and more. Sections are split
-into ordered markdown files for easy viewing. While each section does build upon
-the previous ones, the configuration is basic and common enough that you may be
-able to jump to any section and follow the instructions from there.
+Includes OS, SSH, git, Node.js, nginx, MariaDB, and more. Topics are split into
+ordered pages for easy viewing. While each section does build upon the previous
+ones, the configuration is basic and common enough that you may be able to jump
+to any section and follow the instructions from there.
 
 If you follow this guide from start to finish, you will have a working Debian
 Linux server that...
