@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736349813580">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736376010921">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -31,13 +31,13 @@
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../favicon.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=2.4.0.736349813580" rel="stylesheet" />
+    <link href="../images/penguin-black.png" rel="icon" />
+    <link href="../resources/css/retype.css?v=2.4.0.736376010921" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736349813580" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736376010921" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736349813580" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736349813580" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736376010921" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736376010921" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -52,9 +52,13 @@
                 <!-- Logo -->
                 <div class="flex items-center justify-between h-full py-2 md:w-75">
                     <div class="flex items-center px-2 md:px-6">
-                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-2xl">
-                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Linux Server</span>
-                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">Docs</span>
+                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../images/penguin-black.png">
+                                <img class="max-h-10 hidden dark:inline-block" src="../images/penguin-white.png">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Linux Server Documentation</span>
+                        </a>
                     </div>
         
                     <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
@@ -190,7 +194,7 @@
         <span>Setup</span>
     </h2>
 </doc-anchor-target>
-<p>Install PM2 globally using npm.</p>
+<p>Install <a href="https://pm2.keymetrics.io/">PM2</a> globally using npm.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">sudo npm install -g pm2</code></pre>
 </doc-codeblock></div>
@@ -198,19 +202,78 @@
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-javascript"><code v-pre class="language-javascript">module.exports = {
   apps: [{
-    name: &quot;myapp&quot;,
-    cwd: &quot;./myapp&quot;,
+    name: &quot;my-app&quot;,
+    cwd: &quot;./my-app&quot;,
     script: &quot;npm install &amp;&amp; npm run build &amp;&amp; npm start&quot;,
     watch: true,
     ignore_watch: [&quot;node_modules&quot;, &quot;package-lock.json&quot;, &quot;.next&quot;],
   }],
 };</code></pre>
 </doc-codeblock></div>
-<p>Start the web app process.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>The <code v-pre>script</code> and <code v-pre>ignore_watch</code> settings listed above are good for a simple
+Next.js app. You may need to modify them to fit your app.</p>
+        </div>
+    </div>
+</div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>If you have more than one app, you can place more than one object in the <code v-pre>apps</code>
+array.</p>
+        </div>
+    </div>
+</div>
+<p>Start the process(es) using PM2.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">pm2 start ~/apps/ecosystem.config.js</code></pre>
 </doc-codeblock></div>
-<p>Check that the web app is running at http://localhost:3000.</p>
+<p>Open a web browser and navigate to http://[your server&#x27;s IP
+address/hostname]:3000. You should see your Next.js app.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>You can navigate to http://localhost:3000 as long as...</p>
+<ol>
+<li>you&#x27;re using a virtual machine,</li>
+<li>are working from the host machine, and</li>
+<li>you have port 3000 forwarded</li>
+</ol>
+        </div>
+    </div>
+</div>
 <p>Save the currently running configuration.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">pm2 save</code></pre>
@@ -223,11 +286,18 @@
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u myuser --hp /home/myuser</code></pre>
 </doc-codeblock></div>
-<p>Copy the command. Paste it into your terminal and run it.</p>
+<p>Copy the command.</p>
+<p>Paste it into your terminal and press <strong>Enter</strong> to run it.</p>
 <p>PM2 will now automatically start the saved Node.js processes at system startup.
 Try restarting the machine to test it.</p>
-<p>You will probably want the server serving the web app(s) on port 80 and/or port
-443 for HTTP/HTTPS. For that, you will have to set up a reverse proxy.</p>
+<p>Right now, the process for updating the app is...</p>
+<ol>
+<li>Push changes to the repository</li>
+<li>Log into the server</li>
+<li>Pull changes to the cloned (running) app</li>
+</ol>
+<p>At that point, PM2 will detect the changes, rebuild the app, and restart it.</p>
+<p>You can automate steps 2 and 3 with continuous integration.</p>
 
                                 
                                 <!-- Required only on API pages -->

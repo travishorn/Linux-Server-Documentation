@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736349813580">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736376010921">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
 
     <!-- Primary Meta Tags -->
-    <title>SSH Key Authentication</title>
-    <meta name="title" content="SSH Key Authentication">
+    <title>Public Key Authentication</title>
+    <meta name="title" content="Public Key Authentication">
     <meta name="description" content="OpenSSH server is running on your server" />
 
     <!-- Canonical -->
@@ -20,24 +20,24 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://travishorn.github.io/Linux-Server-Documentation/05-ssh-keys/">
-    <meta property="og:title" content="SSH Key Authentication">
+    <meta property="og:title" content="Public Key Authentication">
     <meta property="og:description" content="OpenSSH server is running on your server">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://travishorn.github.io/Linux-Server-Documentation/05-ssh-keys/">
-    <meta property="twitter:title" content="SSH Key Authentication">
+    <meta property="twitter:title" content="Public Key Authentication">
     <meta property="twitter:description" content="OpenSSH server is running on your server">
 
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../favicon.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=2.4.0.736349813580" rel="stylesheet" />
+    <link href="../images/penguin-black.png" rel="icon" />
+    <link href="../resources/css/retype.css?v=2.4.0.736376010921" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736349813580" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736376010921" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736349813580" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736349813580" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736376010921" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736376010921" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -52,9 +52,13 @@
                 <!-- Logo -->
                 <div class="flex items-center justify-between h-full py-2 md:w-75">
                     <div class="flex items-center px-2 md:px-6">
-                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-2xl">
-                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Linux Server</span>
-                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">Docs</span>
+                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../images/penguin-black.png">
+                                <img class="max-h-10 hidden dark:inline-block" src="../images/penguin-white.png">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Linux Server Documentation</span>
+                        </a>
                     </div>
         
                     <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
@@ -155,10 +159,10 @@
                                 <div id="docs-sidebar-right-toggle"></div>
                 
                                 <!-- Page content  -->
-<doc-anchor-target id="ssh-key-authentication" class="break-words">
+<doc-anchor-target id="public-key-authentication" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#ssh-key-authentication">#</doc-anchor-trigger>
-        <span>SSH Key Authentication</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#public-key-authentication">#</doc-anchor-trigger>
+        <span>Public Key Authentication</span>
     </h1>
 </doc-anchor-target>
 <div class="-mt-3 mb-12 flex flex-wrap text-sm text-gray-400 dark:text-dark-350 items-center">
@@ -189,9 +193,26 @@
         <span>Prepare the Server</span>
     </h2>
 </doc-anchor-target>
-<p>This section needs to be done once per local user account on the server.</p>
-<p>Log in to the user account you want to use.</p>
-<p>Create a directory called <code v-pre>.ssh</code> in your home directory.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>The steps in this section need to be done once per local user account on the
+server.</p>
+        </div>
+    </div>
+</div>
+<p>Log in to the server user account you want to use.</p>
+<p>Create a directory called <code v-pre>.ssh</code> in the home directory.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">mkdir ~/.ssh</code></pre>
 </doc-codeblock></div>
@@ -204,20 +225,20 @@ execute it.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">touch ~/.ssh/authorized_keys</code></pre>
 </doc-codeblock></div>
-<p>Set the file&#x27;s permissions so only you, the owner can read and write it.</p>
+<p>Set the file&#x27;s permissions so only you, the owner can read and write to it.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">chmod 600 ~/.ssh/authorized_keys</code></pre>
 </doc-codeblock></div>
-<p>OpenSSH Server will give user account access to anyone who can provide a private
-key that matches the public keys stored in that file.</p>
+<p>Anyone who can provide a private key that matches the public keys stored in this
+file will have access to the account.</p>
 <doc-anchor-target id="generate-an-ssh-key-pair">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#generate-an-ssh-key-pair">#</doc-anchor-trigger>
         <span>Generate an SSH Key Pair</span>
     </h2>
 </doc-anchor-target>
-<p>Next, create a key pair. The public key will be added to the previously created
-<code v-pre>authorized_keys</code> file.</p>
+<p>Next, create a key pair. A key pair is a public key and a matching private key.
+The public key will be added to the previously created <code v-pre>authorized_keys</code> file.</p>
 <p>On your workstation (not the server), open up a <strong>Terminal</strong>.</p>
 <p>Create a directory called <code v-pre>.ssh</code> in your home directory.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -248,26 +269,45 @@ key that matches the public keys stored in that file.</p>
             </svg>
         </div>
         <div class="pr-5 ml-3 w-full">
-<p>You can actually replace <code v-pre>[your name]@[location of workstation]-[timestamp]</code>
-with anything you want. But I recommend the above because it will help identify
-a key by the name of the person it belongs to, the location it will be used
-from, and the date it was created.</p>
+<p>You can replace <code v-pre>[your name]@[location of workstation]-[timestamp]</code> with
+anything you want. But I recommend the above because it will help identify a key
+by the name of the person it belongs to, the location it will be used from, and
+the date it was created.</p>
         </div>
     </div>
 </div>
 <p>Upon running the command, you will be asked for a passphrase. You can choose
-anything you want here, or you can leave it blank. Make sure you understand the
-security implications of leaving the passphrase blank before you do it.</p>
-<p>Two files are created:</p>
+anything you want here, or you can leave it blank.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>Make sure you understand <a href="https://superuser.com/questions/261361/do-i-need-to-have-a-passphrase-for-my-ssh-rsa-key">the security implications of leaving the passphrase
+blank</a>
+before you do it.</p>
+        </div>
+    </div>
+</div>
+<p>Two files are created. One without a file extension (the private key) and one
+with the file extension <code v-pre>.pub</code> (the public key).</p>
+<p>Example:</p>
 <ul>
 <li><code v-pre>myname@work-2023-05-01</code></li>
 <li><code v-pre>myname@work-2023-05-01.pub</code></li>
 </ul>
-<p><code v-pre>myname@work-2023-05-01</code> contains your private key that you will need to provide
-any time you try to connect to the server. It is not recommended to copy this
-file to another machine. If you need to connect from multiple machines, create
+<p><code v-pre>myname@work-2023-05-01</code> contains the private key that will need be provided any
+time you try to connect to the server. It is not recommended to copy this file
+to another machine. If you need to connect from multiple machines, create
 multiple key pairs. Protect this file like a password.</p>
-<p><code v-pre>myname@work-2023-05-01.pub</code> contains your public key that you can share. Any
+<p><code v-pre>myname@work-2023-05-01.pub</code> contains the public key that can be shared. Any
 user on any device which has this key entered into its <code v-pre>authorized_keys</code> file
 grants you access to the user account (as long as you can provide the private
 key).</p>
@@ -286,10 +326,26 @@ account on the server.</p>
 </doc-codeblock></div>
 <p>Be sure to replace <code v-pre>[public key filename]</code> with the actual public key filename,
 <code v-pre>[your username]</code> with your actual username on the server, and <code v-pre>[your server's IP address/hostname]</code> with your server&#x27;s actual IP address or hostname.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
 <p>If you&#x27;re using a virtual machine, you&#x27;re connecting from the host machine, and
 you have port 22 forwarded, you can use <code v-pre>localhost</code> as your server&#x27;s hostname.</p>
-<p>The command will need the user&#x27;s current password to log in and copy the public
-key.</p>
+        </div>
+    </div>
+</div>
+<p>The command will ask for the user&#x27;s current password so it can log in and append
+the public key to the <code v-pre>authorized_keys</code> file.</p>
 <doc-anchor-target id="connecting-to-the-server-using-an-ssh-key">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#connecting-to-the-server-using-an-ssh-key">#</doc-anchor-trigger>
@@ -304,10 +360,10 @@ authentication.</p>
 <p>You will be asked for the key pair&#x27;s passphrase (if any). Once authenticated,
 you will be connected to your server as before.</p>
 <doc-anchor-target id="using-a-configured-host">
-    <h2>
+    <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#using-a-configured-host">#</doc-anchor-trigger>
         <span>Using a Configured Host</span>
-    </h2>
+    </h3>
 </doc-anchor-target>
 <p>The command you must execute to connect to your server via SSH is tedious to
 type out. You can alleviate this with a configured host.</p>
@@ -324,14 +380,33 @@ type out. You can alleviate this with a configured host.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">ssh myserver</code></pre>
 </doc-codeblock></div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+<p>While the <code v-pre>HostName</code> must be set to your server&#x27;s actual IP address or hostname,
+the <code v-pre>Host</code> can be set to anything you like. It is like an alias that identifies
+the configured host.</p>
+        </div>
+    </div>
+</div>
 <doc-anchor-target id="disabling-password-authentication">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#disabling-password-authentication">#</doc-anchor-trigger>
         <span>Disabling Password Authentication</span>
     </h2>
 </doc-anchor-target>
-<p>Once SSH key authentication is set up and working correctly, you may want to
-disable the less-secure password authentication.</p>
+<p>Once SSH key authentication is set up and working correctly, I suggest disabling
+the less-secure password authentication method.</p>
 <p>Edit <code v-pre>/etc/ssh/sshd_config</code>. Somewhere in the file, add the following line.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">PasswordAuthentication no</code></pre>
@@ -340,6 +415,8 @@ disable the less-secure password authentication.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">sudo systemctl restart sshd</code></pre>
 </doc-codeblock></div>
+<p>From now on, users cannot use a password to authenticate their SSH sessions with
+the server; they must provide a valid private key.</p>
 <doc-anchor-target id="removing-access">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#removing-access">#</doc-anchor-trigger>
@@ -349,6 +426,9 @@ disable the less-secure password authentication.</p>
 <p>If you need to remove access from a particular key pair, edit the server user&#x27;s
 <code v-pre>~/.ssh/authorized_keys</code> file. and delete the line which has the public key you
 want to remove.</p>
+<p>Your server is now ready to handle remote connections with public key
+authentication. At this point, you are ready to set it up to host bare git
+repositories.</p>
 
                                 
                                 <!-- Required only on API pages -->
@@ -415,6 +495,6 @@ want to remove.</p>
 
     <div id="docs-overlay-target"></div>
 
-    <script>window.__DOCS__ = { "title": "Access a Remote Shell with OpenSSH", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false }</script>
+    <script>window.__DOCS__ = { "title": "Public Key Authentication", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false }</script>
 </body>
 </html>
