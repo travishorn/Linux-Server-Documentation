@@ -31,7 +31,7 @@ do
     cd ~/apps/[app name]
     unset GIT_DIR
     git pull
-    npm install
+    npm ci
     npm run build
     pm2 reload [app name]
   fi
@@ -96,7 +96,6 @@ Now edit `~/repos/[repo name]/hooks/post-receive`. The changes are...
 
 ```sh
 #!/bin/bash
-#!/bin/bash
 
 while read oldrev newrev refname
 do
@@ -105,7 +104,7 @@ do
     cd ~/apps/[app name]
     unset GIT_DIR
     git pull
-    npm install
+    npm ci
     BUILD_DIR=.next_temp npm run build
     rm -rf .next
     mv .next_temp .next
