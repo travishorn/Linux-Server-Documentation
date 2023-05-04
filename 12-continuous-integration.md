@@ -23,13 +23,25 @@ name]/hooks/post-receive`.
 
 ```sh
 #!/bin/bash
-cd ~/apps/[app name]
-unset GIT_DIR
-git pull
-npm install
-npm run build
-pm2 reload [app name]
+
+while read oldrev newrev refname
+do
+  branch=$(git rev-parse --symbolic --abbrev-ref $refname)
+  if [ "master" = "$branch" ]; then
+    cd ~/apps/[app name]
+    unset GIT_DIR
+    git pull
+    npm install
+    npm run build
+    pm2 reload [app name]
+  fi
+done
 ```
+
+!!!
+On the line `if [ "master" = "$branch" ]; then`, `master` must be the name of
+the branch which should trigger CI when it's pushed to.
+!!!
 
 !!!
 On the line `pm2 reload [app name]`, the `[app name]` must be the name you set
@@ -84,14 +96,22 @@ Now edit `~/repos/[repo name]/hooks/post-receive`. The changes are...
 
 ```sh
 #!/bin/bash
-cd ~/apps/ffsd-data
-unset GIT_DIR
-git pull
-npm install
-BUILD_DIR=.next_temp npm run build
-rm -rf .next
-mv .next_temp .next
-pm2 reload ffsd-data
+#!/bin/bash
+
+while read oldrev newrev refname
+do
+  branch=$(git rev-parse --symbolic --abbrev-ref $refname)
+  if [ "master" = "$branch" ]; then
+    cd ~/apps/[app name]
+    unset GIT_DIR
+    git pull
+    npm install
+    BUILD_DIR=.next_temp npm run build
+    rm -rf .next
+    mv .next_temp .next
+    pm2 reload [app name]
+  fi
+done
 ```
 
 For now, the app is accessible directly on port 3000. Ultimately, you will
