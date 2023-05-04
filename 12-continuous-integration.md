@@ -26,7 +26,15 @@ name]/hooks/post-receive`.
 cd ~/apps/[app name]
 unset GIT_DIR
 git pull
+npm install
+npm run build
+pm2 reload [app name]
 ```
+
+!!!
+On the line `pm2 reload [app name]`, the `[app name]` must be the name you set
+in `ecosystem.config.js`.
+!!!
 
 Make the hook executable.
 
@@ -37,14 +45,12 @@ chmod +x ~/repos/[repo name]/hooks/post-receive
 The setup is complete. Here is the process this continuous integration
 solution follows:
 
-1. Changes are pushed to the hosted bare repository (from a development machine,
-for example)
+1. A developer pushes changes to the repository
 2. The post-receive hook in the bare repository is automatically executed
-3. The hook pulls the changes from the bare repository to the cloned (running)
-   app
-4. PM2 is watching the cloned repository's files and detects the file changes
-5. PM2 executes the script defined in `~/apps/ecosystem.config.js`
-6. The app is rebuilt and restarted
+3. The hook pulls the changes to the production code in `~/apps`
+4. Any missing dependencies are installed
+5. The production app is rebuilt
+6. The processes are reloaded by PM2, one at a time for zero downtime
 
 All of this happens automatically when changes are pushed to the repository.
 
