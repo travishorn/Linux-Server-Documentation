@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736484099104">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736523870554">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -32,12 +32,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/penguin-black.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=2.4.0.736484099104" rel="stylesheet" />
+    <link href="../resources/css/retype.css?v=2.4.0.736523870554" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736484099104" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736523870554" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736484099104" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736484099104" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736523870554" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736523870554" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -238,6 +238,44 @@ solution follows:</p>
 <li>The processes are reloaded by PM2, one at a time for zero downtime</li>
 </ol>
 <p>All of this happens automatically when changes are pushed to the repository.</p>
+<doc-anchor-target id="reduce-downtime-on-a-nextjs-app">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#reduce-downtime-on-a-nextjs-app">#</doc-anchor-trigger>
+        <span>Reduce Downtime on a Next.js App</span>
+    </h2>
+</doc-anchor-target>
+<p>With the current configuration, there will still be some downtime when Next.js
+builds your app. During the build, it removes everything from the <code v-pre>.next</code>
+directory, then repopulates it. Since your running processes are accessing files
+in the <code v-pre>.next</code> directory, the app is temporarily unavailable.</p>
+<p>You can solve this by having Next.js build into a temporary directory, then
+moving the built files over once the build is complete.</p>
+<p>Edit <code v-pre>~/apps/[app name]/next.config.js</code>. Add the <code v-pre>distDir</code> line below.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  distDir: process.env.BUILD_DIR || &quot;.next&quot;,
+};</code></pre>
+</doc-codeblock></div>
+<p>This allows us to set a build directory at build time.</p>
+<p>Now edit <code v-pre>~/repos/[repo name]/hooks/post-receive</code>. The changes are...</p>
+<ol>
+<li>Modify the build command to set a temporary build directory <code v-pre>.next_temp</code></li>
+<li>Add a command to remove the old <code v-pre>.next</code> directory</li>
+<li>Add a command to rename <code v-pre>.next_temp</code> to <code v-pre>.next</code>.</li>
+</ol>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
+cd ~/apps/ffsd-data
+unset GIT_DIR
+git pull
+npm install
+BUILD_DIR=.next_temp npm run build
+rm -rf .next
+mv .next_temp .next
+pm2 reload ffsd-data</code></pre>
+</doc-codeblock></div>
 <p>For now, the app is accessible directly on port 3000. Ultimately, you will
 probably want to serve the Node.js app(s) behind a reverse proxy like
 <a href="https://www.nginx.com/">nginx</a> for improved security, load balancing, caching,
