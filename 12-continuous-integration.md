@@ -54,6 +54,46 @@ solution follows:
 
 All of this happens automatically when changes are pushed to the repository.
 
+## Reduce Downtime on a Next.js App
+
+With the current configuration, there will still be some downtime when Next.js
+builds your app. During the build, it removes everything from the `.next`
+directory, then repopulates it. Since your running processes are accessing files
+in the `.next` directory, the app is temporarily unavailable.
+
+You can solve this by having Next.js build into a temporary directory, then
+moving the built files over once the build is complete.
+
+Edit `~/apps/[app name]/next.config.js`. Add the `distDir` line below.
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  distDir: process.env.BUILD_DIR || ".next",
+};
+```
+
+This allows us to set a build directory at build time.
+
+Now edit `~/repos/[repo name]/hooks/post-receive`. The changes are...
+
+1. Modify the build command to set a temporary build directory `.next_temp`
+2. Add a command to remove the old `.next` directory
+3. Add a command to rename `.next_temp` to `.next`.
+
+```sh
+#!/bin/bash
+cd ~/apps/ffsd-data
+unset GIT_DIR
+git pull
+npm install
+BUILD_DIR=.next_temp npm run build
+rm -rf .next
+mv .next_temp .next
+pm2 reload ffsd-data
+```
+
 For now, the app is accessible directly on port 3000. Ultimately, you will
 probably want to serve the Node.js app(s) behind a reverse proxy like
 [nginx](https://www.nginx.com/) for improved security, load balancing, caching,
