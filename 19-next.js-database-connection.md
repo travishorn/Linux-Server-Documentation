@@ -4,7 +4,7 @@ icon: file
 author:
   name: Travis Horn
   email: travis@travishorn.com
-order: -18
+order: -19
 ---
 
 # Connect to MariaDB from a Next.js App
