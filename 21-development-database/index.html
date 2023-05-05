@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736607069197">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736608174518">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -32,12 +32,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/penguin-black.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=2.4.0.736607069197" rel="stylesheet" />
+    <link href="../resources/css/retype.css?v=2.4.0.736608174518" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736607069197" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736608174518" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736607069197" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736607069197" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736608174518" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736608174518" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -195,7 +195,7 @@
 <p>Instead of creating a development database by typing in commands manually, it is
 better to create a script. This way, you can sync the development database with
 the production one at any time with one command.</p>
-<p>Create <code v-pre>~/sync_dev_db.sh</code>.</p>
+<p>Create a sync script at <code v-pre>/usr/local/bin/sync_dev_db.sh</code>.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
 
@@ -205,7 +205,7 @@ the production one at any time with one command.</p>
 # Enable errexit so the script stops as soon as it encounters an error
 set -e
 
-PROD_DB=&quot;[database name]&quot;
+PROD_DB=&quot;[production database name]&quot;
 DEV_DB=&quot;${PROD_DB}_dev&quot;
 DUMP_FILE=&quot;/tmp/${PROD_DB}_$(date -u +&quot;%Y-%m-%dT%H:%M:%SZ&quot;).sql&quot;
 
@@ -214,9 +214,19 @@ echo &quot;Checking if development database already exists...&quot;
 
 if mariadb -e &quot;USE $DEV_DB&quot;;
 then
-  # Development database already exists, drop it
-  echo &quot;Development database already exists. Dropping it...&quot;
-  mariadb -e &quot;DROP DATABASE $DEV_DB;&quot;
+  # Development database already exists, ask to continue before dropping it
+  echo &quot;Development database '$DEV_DB' already exists.&quot;
+  read -p &quot;Remove all its data and replace it with a copy of the production database '$PROD_DB'? (y/N) &quot; answer
+
+  if [[ $answer = y ]] ; then
+    # The answer is yes. Drop the database
+    echo &quot;Dropping existing development database...&quot;
+    mariadb -e &quot;DROP DATABASE $DEV_DB;&quot;
+  else
+    # The answer is no. Abort the script
+    echo &quot;Aborted.&quot;
+    exit 0
+  fi
 else
   # Development database does not exists. No action needed
   echo &quot;No existing development database found.&quot;
@@ -240,11 +250,11 @@ rm $DUMP_FILE
 
 echo &quot;Done.&quot;</code></pre>
 </doc-codeblock></div>
-<p>Make sure you replace <code v-pre>[database name]</code> in the script above with the actual name
-of your production database.</p>
+<p>Make sure you replace <code v-pre>[production database name]</code> in the script above with the
+actual name of your production database.</p>
 <p>Make the script executable.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">chmod +x ~/sync_dev_db.sh</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">sudo chmod +x /usr/local/bin/sync_dev_db.sh</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="createsync-the-development-database">
     <h2>
@@ -271,7 +281,7 @@ database, if it exists.</p>
 </div>
 <p>Run the sync script.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">sudo ~/sync_dev_db.sh</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">sudo sync_dev_db.sh</code></pre>
 </doc-codeblock></div>
 <p>A database that is an exact duplicate of your production database now exists in
 MariaDB. The name has <code v-pre>_dev</code> appended to it. For example, if your production
