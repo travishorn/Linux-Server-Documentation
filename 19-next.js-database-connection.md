@@ -16,10 +16,11 @@ order: -19
 
 ## Install Dependencies
 
-This solution uses `serverless-mysql`. Install it as a dependency.
+This solution uses the `knex` and `mysql2` packages. Install them as
+dependencies.
 
 ```sh
-npm install serverless-mysql
+npm install knex mysql2
 ```
 
 ## Set Environment Variables
@@ -41,113 +42,86 @@ You may need to change the host or the port depending on your setup.
 
 ## Create a Database Connection File
 
-Create a new file called `lib/db.js` in the root directory of your app.
+Create a new file called `lib/db.ts`.
 
 ```javascript
-import dbConnection from 'serverless-mysql';
+import knex from "knex";
 
-const db = dbConnection({
-  config: {
+export const db = knex({
+  client: "mysql2",
+  connection: {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
   },
 });
-
-export default async function executeQuery({ query, values }) {
-  try {
-    const results = await db.query(query, values);
-    await db.end();
-    return results;
-  } catch (error) {
-    return { error };
-  }
-};
 ```
 
 We'll import this file into any file that needs to connect to the database.
 
-## Create an API Route
+## Get Data from the Database Server-Side
 
-Create a new file called `pages/api/message.ts`. Feel free to change "`message`"
-to something more appropriate for your application.
+Inside a Next.js page like `pages/index.tsx`, import the `db` function from the
+file we just created..
 
 ```typescript
-import type { NextApiRequest, NextApiResponse } from 'next';
-import executeQuery from '../../lib/db';
+import { db } from "../lib/db";
+```
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  switch (req.method) {
-    case "GET":
-      try {
-        const result = await executeQuery({
-          query: "SELECT text FROM Messages ORDER BY createdAt LIMIT 1",
-          values: [],
-        });
-  
-        res.status(200).json(result);
-      } catch (err) {
-        console.error(err);
-      }
-      break;
-    case "POST":
-      try {
-        const result = await executeQuery({
-          query: "INSERT INTO Messages (text) VALUES (?)",
-          values: [req.body.text],
-        });
-  
-        res.status(200).json(result);
-      } catch (err) {
-        console.error(err);
-      }
-      break;
-    default:
-      res.status(405).end();
-  }
+Then create a `getServerSideProps()` function. Next.js will use this to get data
+server-side and pass them as props to the page.
+
+```typescript
+export async function getServerSideProps() {
+  const message = await db("Message").first("text").where({ id: 1 });
+
+  return {
+    props: { message },
+  };
 };
 ```
 
-The request methods and queries will need to be changed to match your
-application.
-
-At this point, (as long as the app is running) you can access the endpoint at
-`http://localhost:3000/api/message`.
-
-## Use this Endpoint on Client-side Pages
-
-Inside a client-side page like `pages/index.tsx`, import the `useState` and
-`useEffect` functions from `react`.
+Now, use the prop in the page's render function.
 
 ```typescript
-import { useState, useEffect } from "react";
+export default function Home({ message }) {
+  return (
+    <main>
+      <h1>{message.text}</h1>
+    </main>
+  )
+}
 ```
 
-Then, inside `export default function Home() {}`, describe how to use and store
-the message text.
+## Using a Raw Query
+
+Knex has a built in `raw()` function that allows you to execute raw SQL.
+Unfortunately, the format of the data returned by this function doesn't work
+well with Next.js.
+
+However, we can write a simple wrapper around it to help us.
+
+Add the following to `lib/db.ts`.
 
 ```typescript
-const [messageText, setMessageText] = useState("");
-
-useEffect(() => {
-  fetch("/api/message")
-    .then(res => res.json())
-    .then(data => {
-      setMessageText(data[0].text);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-}, []);
+export const raw = async (sql: string, bindings?: any) => {
+  const result = await db.raw(sql, bindings);
+  const data = result[0];
+  const parsed = JSON.parse(JSON.stringify(data));
+  return parsed.length === 1 ? parsed[0] : parsed;
+};
 ```
 
-Now you can display the text on the page, inside the returned TSX.
+Now on your page, you can import this function.
 
 ```tsx
-<div>{messageText}</div>
+import { db, raw } from "../lib/db";
+```
+
+And you can use it to execute raw queries in `getServerSideProps()`.
+
+```tsx
+const message = await raw("SELECT text FROM Message WHERE id = 1 LIMIT 1;");
 ```
