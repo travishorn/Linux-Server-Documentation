@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736971352168">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736982584620">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -32,12 +32,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/penguin-black.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=2.4.0.736971352168" rel="stylesheet" />
+    <link href="../resources/css/retype.css?v=2.4.0.736982584620" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736971352168" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736982584620" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736971352168" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736971352168" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736982584620" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736982584620" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -193,9 +193,10 @@
         <span>Install Dependencies</span>
     </h2>
 </doc-anchor-target>
-<p>This solution uses <code v-pre>serverless-mysql</code>. Install it as a dependency.</p>
+<p>This solution uses the <code v-pre>knex</code> and <code v-pre>mysql2</code> packages. Install them as
+dependencies.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">npm install serverless-mysql</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">npm install knex mysql2</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="set-environment-variables">
     <h2>
@@ -221,111 +222,80 @@ DB_PASSWORD= [database user password]</code></pre>
         <span>Create a Database Connection File</span>
     </h2>
 </doc-anchor-target>
-<p>Create a new file called <code v-pre>lib/db.js</code> in the root directory of your app.</p>
+<p>Create a new file called <code v-pre>lib/db.ts</code>.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">import dbConnection from 'serverless-mysql';
+<pre class="language-javascript"><code v-pre class="language-javascript">import knex from &quot;knex&quot;;
 
-const db = dbConnection({
-  config: {
+export const db = knex({
+  client: &quot;mysql2&quot;,
+  connection: {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
   },
-});
-
-export default async function executeQuery({ query, values }) {
-  try {
-    const results = await db.query(query, values);
-    await db.end();
-    return results;
-  } catch (error) {
-    return { error };
-  }
-};</code></pre>
+});</code></pre>
 </doc-codeblock></div>
 <p>We&#x27;ll import this file into any file that needs to connect to the database.</p>
-<doc-anchor-target id="create-an-api-route">
+<doc-anchor-target id="get-data-from-the-database-server-side">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-an-api-route">#</doc-anchor-trigger>
-        <span>Create an API Route</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#get-data-from-the-database-server-side">#</doc-anchor-trigger>
+        <span>Get Data from the Database Server-Side</span>
     </h2>
 </doc-anchor-target>
-<p>Create a new file called <code v-pre>pages/api/message.ts</code>. Feel free to change &quot;<code v-pre>message</code>&quot;
-to something more appropriate for your application.</p>
+<p>Inside a Next.js page like <code v-pre>pages/index.tsx</code>, import the <code v-pre>db</code> function from the
+file we just created..</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-typescript"><code v-pre class="language-typescript">import type { NextApiRequest, NextApiResponse } from 'next';
-import executeQuery from '../../lib/db';
+<pre class="language-typescript"><code v-pre class="language-typescript">import { db } from &quot;../lib/db&quot;;</code></pre>
+</doc-codeblock></div>
+<p>Then create a <code v-pre>getServerSideProps()</code> function. Next.js will use this to get data
+server-side and pass them as props to the page.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-typescript"><code v-pre class="language-typescript">export async function getServerSideProps() {
+  const message = await db(&quot;Message&quot;).first(&quot;text&quot;).where({ id: 1 });
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  switch (req.method) {
-    case &quot;GET&quot;:
-      try {
-        const result = await executeQuery({
-          query: &quot;SELECT text FROM Messages ORDER BY createdAt LIMIT 1&quot;,
-          values: [],
-        });
-  
-        res.status(200).json(result);
-      } catch (err) {
-        console.error(err);
-      }
-      break;
-    case &quot;POST&quot;:
-      try {
-        const result = await executeQuery({
-          query: &quot;INSERT INTO Messages (text) VALUES (?)&quot;,
-          values: [req.body.text],
-        });
-  
-        res.status(200).json(result);
-      } catch (err) {
-        console.error(err);
-      }
-      break;
-    default:
-      res.status(405).end();
-  }
+  return {
+    props: { message },
+  };
 };</code></pre>
 </doc-codeblock></div>
-<p>The request methods and queries will need to be changed to match your
-application.</p>
-<p>At this point, (as long as the app is running) you can access the endpoint at
-<code v-pre>http://localhost:3000/api/message</code>.</p>
-<doc-anchor-target id="use-this-endpoint-on-client-side-pages">
+<p>Now, use the prop in the page&#x27;s render function.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-typescript"><code v-pre class="language-typescript">export default function Home({ message }) {
+  return (
+    &lt;main&gt;
+      &lt;h1&gt;{message.text}&lt;/h1&gt;
+    &lt;/main&gt;
+  )
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="using-a-raw-query">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#use-this-endpoint-on-client-side-pages">#</doc-anchor-trigger>
-        <span>Use this Endpoint on Client-side Pages</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-a-raw-query">#</doc-anchor-trigger>
+        <span>Using a Raw Query</span>
     </h2>
 </doc-anchor-target>
-<p>Inside a client-side page like <code v-pre>pages/index.tsx</code>, import the <code v-pre>useState</code> and
-<code v-pre>useEffect</code> functions from <code v-pre>react</code>.</p>
+<p>Knex has a built in <code v-pre>raw()</code> function that allows you to execute raw SQL.
+Unfortunately, the format of the data returned by this function doesn&#x27;t work
+well with Next.js.</p>
+<p>However, we can write a simple wrapper around it to help us.</p>
+<p>Add the following to <code v-pre>lib/db.ts</code>.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-typescript"><code v-pre class="language-typescript">import { useState, useEffect } from &quot;react&quot;;</code></pre>
+<pre class="language-typescript"><code v-pre class="language-typescript">export const raw = async (sql: string, bindings?: any) =&gt; {
+  const result = await db.raw(sql, bindings);
+  const data = result[0];
+  const parsed = JSON.parse(JSON.stringify(data));
+  return parsed.length === 1 ? parsed[0] : parsed;
+};</code></pre>
 </doc-codeblock></div>
-<p>Then, inside <code v-pre>export default function Home() {}</code>, describe how to use and store
-the message text.</p>
+<p>Now on your page, you can import this function.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-typescript"><code v-pre class="language-typescript">const [messageText, setMessageText] = useState(&quot;&quot;);
-
-useEffect(() =&gt; {
-  fetch(&quot;/api/message&quot;)
-    .then(res =&gt; res.json())
-    .then(data =&gt; {
-      setMessageText(data[0].text);
-    })
-    .catch(err =&gt; {
-      console.error(err);
-    });
-}, []);</code></pre>
+<pre class="language-tsx"><code v-pre class="language-tsx">import { db, raw } from &quot;../lib/db&quot;;</code></pre>
 </doc-codeblock></div>
-<p>Now you can display the text on the page, inside the returned TSX.</p>
+<p>And you can use it to execute raw queries in <code v-pre>getServerSideProps()</code>.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-tsx"><code v-pre class="language-tsx">&lt;div&gt;{messageText}&lt;/div&gt;</code></pre>
+<pre class="language-tsx"><code v-pre class="language-tsx">const message = await raw(&quot;SELECT text FROM Message WHERE id = 1 LIMIT 1;&quot;);</code></pre>
 </doc-codeblock></div>
 
                                 
