@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736608174518">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="2.4.0.736971352168">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 2.4.0">
@@ -32,12 +32,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/penguin-black.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=2.4.0.736608174518" rel="stylesheet" />
+    <link href="../resources/css/retype.css?v=2.4.0.736971352168" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736608174518" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=2.4.0.736971352168" data-turbo-eval="false" defer></script>
     <script type="text/javascript" src="../resources/js/retype.js?v=2.4.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736608174518" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736608174518" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=2.4.0.736971352168" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=2.4.0.736971352168" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -224,7 +224,7 @@ anything you like. Here it is named <code v-pre>recovered</code>.</p>
 </doc-codeblock></div>
 <p>Unzip the compressed database backup in the directory.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">sudo gunzip -c /var/mariadb/backup/backup_2023-04-30T03\:14\:58Z.gz | sudo mbstream -x --directory=/var/mariadb/backup/recovered</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">sudo gunzip -c /var/mariadb/backup/backup_20230430T031458Z.gz | sudo mbstream -x --directory=/var/mariadb/backup/recovered</code></pre>
 </doc-codeblock></div>
 <p>Prepare the recovery files. This is necessary because files created at backup
 time are not point-in-time consistent and MariaDB will reject the recovery if
