@@ -26,14 +26,18 @@ page.
 ## Configure nginx
 
 Edit the nginx configuration file at `/etc/nginx/sites-available/default`.
-```
 
 Replace the `location /` block with the following:
 
 ```
-location / { proxy_pass http://localhost:3000; proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection
-    'upgrade'; proxy_set_header Host $host; proxy_cache_bypass $http_upgrade; }
+location / {
+  proxy_pass http://localhost:3000;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection 'upgrade';
+  proxy_set_header Host $host;
+  proxy_cache_bypass $http_upgrade;
+}
 ```
 
 Save and quit editing the file.
@@ -56,8 +60,8 @@ should see your Node.js app.
 If you're using a virtual machine, are working from the host machine, and you
 have port 80 forwarded, you can visit http://localhost.
 
-## Block Direct App Access
-
+!!!warning
 All requests to the web application should go through port 80 (or 443 if you set
 up HTTPS/SSL later). However, the application is still listening on port 3000.
 Use a firewall to block external requests to port 3000. See separate guide.
+!!!
