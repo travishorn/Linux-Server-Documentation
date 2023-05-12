@@ -24,5 +24,11 @@ git init --bare ~/repos/[repo name]
 
 Change `[repo name]` to a name of your choosing. Example: `my-app`
 
+Write a descriptive name or short description of the repository.
+
+```sh
+echo "Some short description" > ~/repos/[repo name]/description
+```
+
 Now developers who can authenticate as this local user can clone, pull from, and
 push to this repository.
