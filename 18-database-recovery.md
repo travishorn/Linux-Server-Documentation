@@ -35,7 +35,7 @@ sudo mkdir /var/mariadb/backup/recovered
 Unzip the compressed database backup in the directory.
 
 ```sh
-sudo gunzip -c /var/mariadb/backup/backup_2023-04-30T03\:14\:58Z.gz | sudo mbstream -x --directory=/var/mariadb/backup/recovered
+sudo gunzip -c /var/mariadb/backup/backup_20230430T031458Z.gz | sudo mbstream -x --directory=/var/mariadb/backup/recovered
 ```
 
 Prepare the recovery files. This is necessary because files created at backup

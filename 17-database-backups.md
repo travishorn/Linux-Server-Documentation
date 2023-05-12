@@ -37,7 +37,7 @@ set -e
 mkdir -p /var/mariadb/backup
 
 # Store the backup filename
-FILENAME=/var/mariadb/backup/backup_$(date -u +%Y-%m-%dT%H:%M:%SZ).gz
+FILENAME=/var/mariadb/backup/backup_$(date -u +%Y%m%dT%H%M%SZ).gz
 
 # Use mariabackup to create a compressed backup of the database
 mariabackup --user=root --backup --stream=xbstream | gzip > "$FILENAME"
@@ -131,7 +131,7 @@ every day at midnight.
 You can back up databases at any time.
 
 ```sh
-sudo mariabackup --user=root --backup --stream=xbstream | sudo gzip > /var/mariadb/backup/backup_$(date -u +%Y-%m-%dT%H:%M:%SZ).gz
+sudo mariabackup --user=root --backup --stream=xbstream | sudo gzip > /var/mariadb/backup/backup_$(date -u +%Y%m%dT%H%M%SZ).gz
 ```
 
 Or you could run the backup script.
