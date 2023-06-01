@@ -64,5 +64,37 @@ Once the overrides are in place, restart the timer.
 sudo systemctl restart apt-daily-upgrade.timer
 ```
 
+## Rebooting
+
+Some upgrades require rebooting the system. You can check if a reboot is pending
+by checking for the presence of `/var/run/reboot-required`.
+
+```sh
+ls /var/run/reboot-required
+```
+
+If the file exists, consider rebooting at some point.
+
+```sh
+sudo shutdown -r now
+```
+
+### Automatic Rebooting
+
+You can also set the system to automatically reboot after UnattendedUpgrades
+detects that one is pending.
+
+Edit `/etc/apt/apt.conf.d/50unattended-upgrades`. Uncomment this line:
+
+```
+//Unattended-Upgrade::Automatic-Reboot "false";
+```
+
+And change `false` to `true`.
+
+```
+Unattended-Upgrade::Automatic-Reboot "true";
+```
+
 Your server is now set up to apply automatic updates. At this point, you are
 ready to set it up to host bare git repositories.
