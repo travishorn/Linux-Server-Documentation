@@ -4,7 +4,7 @@ icon: file
 author:
   name: Travis Horn
   email: travis@travishorn.com
-order: -6
+order: -7
 ---
 
 # Set up a git Server

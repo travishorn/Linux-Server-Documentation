@@ -208,5 +208,4 @@ If you need to remove access from a particular key pair, edit the server user's
 want to remove.
 
 Your server is now ready to handle remote connections with public key
-authentication. At this point, you are ready to set it up to host bare git
-repositories.
+authentication. At this point, you are ready to set up automatic updates.

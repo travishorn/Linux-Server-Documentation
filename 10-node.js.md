@@ -4,7 +4,7 @@ icon: file
 author:
   name: Travis Horn
   email: travis@travishorn.com
-order: -9
+order: -10
 ---
 
 # Install Node.js

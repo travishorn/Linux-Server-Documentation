@@ -4,7 +4,7 @@ icon: file
 author:
   name: Travis Horn
   email: travis@travishorn.com
-order: -8
+order: -9
 ---
 
 # Pull from and Push to a git Repository
