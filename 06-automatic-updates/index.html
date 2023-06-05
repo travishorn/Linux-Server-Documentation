@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/Linux-Server-Documentation">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.0.1.738942684481">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.0.2.739295945933">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 3.0.1">
+    <meta name="generator" content="Retype 3.0.2">
 
     <!-- Primary Meta Tags -->
     <title>Automatic Updates</title>
@@ -32,12 +32,12 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("/Linux-Server-Documentation/doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/penguin-black.png" rel="icon" />
-    <link href="../resources/css/retype.css?v=3.0.1.738942684481" rel="stylesheet" />
+    <link href="../resources/css/retype.css?v=3.0.2.739295945933" rel="stylesheet" />
 
-    <script type="text/javascript" src="../resources/js/config.js?v=3.0.1.738942684481" data-turbo-eval="false" defer></script>
-    <script type="text/javascript" src="../resources/js/retype.js?v=3.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=3.0.1.738942684481" data-turbo-eval="false" defer></script>
-    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=3.0.1.738942684481" defer></script>
+    <script type="text/javascript" src="../resources/js/config.js?v=3.0.2.739295945933" data-turbo-eval="false" defer></script>
+    <script type="text/javascript" src="../resources/js/retype.js?v=3.0.2" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" type="text/javascript" src="../resources/js/lunr.js?v=3.0.2.739295945933" data-turbo-eval="false" defer></script>
+    <script id="prism-js" type="text/javascript" src="../resources/js/prism.js?v=3.0.2.739295945933" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -232,29 +232,73 @@ line clears the defaults first.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">sudo systemctl restart apt-daily-upgrade.timer</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="rebooting">
+<doc-anchor-target id="scheduled-reboots">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#rebooting">#</doc-anchor-trigger>
-        <span>Rebooting</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#scheduled-reboots">#</doc-anchor-trigger>
+        <span>Scheduled Reboots</span>
     </h2>
 </doc-anchor-target>
-<p>Some upgrades require rebooting the system. You can check if a reboot is pending
-by checking for the presence of <code v-pre>/var/run/reboot-required</code>.</p>
+<p>Some upgrades require rebooting the system. One strategy is to set a specific
+day of the month to check and perform a reboot if required.</p>
+<p>Create the script to check and reboot if required at
+<code v-pre>/usr/local/bin/reboot_if_required.sh</code>.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">ls /var/run/reboot-required</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
+
+if [ -f /var/run/reboot-required ]; then
+  echo &quot;Reboot required. Initiating reboot...&quot;
+  /sbin/shutdown -r now
+else
+  echo &quot;No reboot required.&quot;
+fi</code></pre>
 </doc-codeblock></div>
-<p>If the file exists, consider rebooting at some point.</p>
+<p>Make the script executable.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">sudo shutdown -r now</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">sudo chmod +x reboot_if_required.sh</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="automatic-rebooting">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#automatic-rebooting">#</doc-anchor-trigger>
-        <span>Automatic Rebooting</span>
-    </h3>
+<p>Create a systemd service for the script at
+<code v-pre>/etc/systemd/system/unattended_reboot.service</code>.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">[Unit]
+Description=Reboot (if required)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/reboot_if_required.sh
+
+[Install]
+WantedBy=default.target</code></pre>
+</doc-codeblock></div>
+<p>Create a matching timer for the service at
+<code v-pre>/etc/systemd/system/unattended_reboot.timer</code>.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-none"><code v-pre class="language-none">[Unit]
+Description=Reboot (if required) once per month on the 15th at 11 PM
+
+[Timer]
+OnCalendar=*-15 23:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target</code></pre>
+</doc-codeblock></div>
+<p>Enable the timer.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">sudo systemctl enable unattended_reboot.timer</code></pre>
+</doc-codeblock></div>
+<p>Start the timer.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">sudo systemctl start unattended_reboot.timer</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="rebooting-immediately-after-upgrades">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#rebooting-immediately-after-upgrades">#</doc-anchor-trigger>
+        <span>Rebooting Immediately After Upgrades</span>
+    </h2>
 </doc-anchor-target>
-<p>You can also set the system to automatically reboot after UnattendedUpgrades
-detects that one is pending.</p>
+<p>You could take a more aggresive rebooting strategy instead. You can set the
+system to automatically reboot after UnattendedUpgrades detects that one is
+pending.</p>
 <p>Edit <code v-pre>/etc/apt/apt.conf.d/50unattended-upgrades</code>. Uncomment this line:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">//Unattended-Upgrade::Automatic-Reboot &quot;false&quot;;</code></pre>
@@ -262,6 +306,22 @@ detects that one is pending.</p>
 <p>And change <code v-pre>false</code> to <code v-pre>true</code>.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-none"><code v-pre class="language-none">Unattended-Upgrade::Automatic-Reboot &quot;true&quot;;</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="manual-rebooting">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#manual-rebooting">#</doc-anchor-trigger>
+        <span>Manual Rebooting</span>
+    </h2>
+</doc-anchor-target>
+<p>If you don&#x27;t use either of the two automatic options above, you can manually
+reboot when it works for you. You can check if a reboot is pending by checking
+for the presence of <code v-pre>/var/run/reboot-required</code>.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">ls /var/run/reboot-required</code></pre>
+</doc-codeblock></div>
+<p>If the file exists, consider rebooting at some point.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">sudo shutdown -r now</code></pre>
 </doc-codeblock></div>
 <p>Your server is now set up to apply automatic updates. At this point, you are
 ready to set it up to host bare git repositories.</p>
